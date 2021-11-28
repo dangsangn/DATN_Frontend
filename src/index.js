@@ -1,18 +1,42 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import { CssBaseline } from "@mui/material";
+import ReactDOM from "react-dom";
+import "styles/index.css";
+import "styles/reset.css";
+import App from "./App";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import * as serviceWorker from "./serviceWorker";
+import history from "utils/history";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Router } from "react-router-dom";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#F7346F",
+    },
+    white: {
+      main: "#fff",
+    },
+    blue: {
+      main: "#4877F8",
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <Router history={history}>
+          <App />
+          <CssBaseline />
+        </Router>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

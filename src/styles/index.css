@@ -1,0 +1,19 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+ p {
+   font-size: 14px !important;
+   line-height: 26px !important;
+ }
+
+ input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
