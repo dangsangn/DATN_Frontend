@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLogin: false,
-  logging: false,
+  loading: false,
   user: undefined,
 };
 
@@ -11,19 +11,19 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      state.logging = true;
+      state.loading = true;
     },
     loginSuccess: (state, action) => {
       state.isLogin = true;
-      state.logging = false;
+      state.loading = false;
       state.user = action.payload;
     },
     loginFailures: (state, action) => {
       state.isLogin = false;
-      state.logging = false;
+      state.loading = false;
     },
     logout: (state, action) => {
-      state.logging = false;
+      state.loading = false;
       state.isLogin = false;
     },
   },
@@ -32,7 +32,7 @@ const loginSlice = createSlice({
 export const loginActions = loginSlice.actions;
 
 export const selectIsLogin = (state) => state.login.isLogin;
-export const selectLogging = (state) => state.logging.logging;
+export const selectLoadingLogin = (state) => state.loading.loading;
 
 const loginReducers = loginSlice.reducer;
 export default loginReducers;

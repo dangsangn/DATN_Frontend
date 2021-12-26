@@ -1,26 +1,46 @@
 import { TextField } from "@mui/material";
 import React from "react";
 import { useController } from "react-hook-form";
-
-export const InputField = ({ name, control, label, ...inputProps }) => {
+import styled from "styled-components";
+export const InputField = ({
+  name,
+  control,
+  label,
+  placeholder,
+  ...inputProps
+}) => {
   const {
     field: { onChange, onBlur, value, ref },
     fieldState: { invalid, error },
   } = useController({ name, control });
   return (
-    <TextField
-      fullWidth
-      size="small"
-      margin="normal"
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      label={label}
-      variant="outlined"
-      inputRef={ref}
-      error={invalid}
-      helperText={error?.message}
-      inputProps={inputProps}
-    />
+    <WrapField>
+      <Label>{label}</Label>
+      <TextField
+        fullWidth
+        size="small"
+        margin="normal"
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        variant="outlined"
+        inputRef={ref}
+        error={invalid}
+        placeholder={placeholder}
+        helperText={error?.message}
+        inputProps={inputProps}
+      />
+    </WrapField>
   );
 };
+
+const Label = styled.label`
+  display: inline-block;
+  margin-bottom: 4px;
+  font-size: 14px;
+`;
+const WrapField = styled.div`
+  .MuiFormControl-marginNormal {
+    margin: 0;
+  }
+`;

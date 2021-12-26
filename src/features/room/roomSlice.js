@@ -3,6 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   listRoom: [],
   loading: false,
+  initialValueForm: {
+    images: [],
+    utilities: [],
+  },
 };
 
 const roomSlice = createSlice({
@@ -16,8 +20,16 @@ const roomSlice = createSlice({
       state.loading = false;
       state.listRoom = action.payload;
     },
+    getListRommFailed: (state, action) => {},
+    inforFormTemporary: (state, action) => {
+      state.initialValueForm = {
+        ...state.initialValueForm,
+        ...action.payload,
+      };
+    },
   },
 });
 
+export const roomActions = roomSlice.actions;
 const roomRenderers = roomSlice.reducer;
 export default roomRenderers;

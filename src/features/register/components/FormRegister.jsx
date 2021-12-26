@@ -56,16 +56,27 @@ const FormRegister = () => {
     <Wrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box mt={1}>
-          <InputField name="username" control={control} label="Tên đăng nhập" />
+          <InputField
+            name="username"
+            control={control}
+            label="Tên đăng nhập"
+            placeholder="Tên đăng nhập"
+          />
         </Box>
         <Box mt={1}>
-          <PasswordField name="password" control={control} label="Mật khẩu" />
+          <PasswordField
+            name="password"
+            control={control}
+            label="Mật khẩu"
+            placeholder="Mật khẩu"
+          />
         </Box>
         <Box mt={1}>
           <PasswordField
             name="passwordConfirm"
             control={control}
             label="Xác nhận mật khẩu"
+            placeholder="Xác nhận mật khẩu"
           />
         </Box>
         <Box mt={2}>
@@ -75,6 +86,7 @@ const FormRegister = () => {
             color="primary"
             disabled={!doneForm}
             fullWidth
+            sx={{ padding: "8px" }}
           >
             {isSubmitting && <CircularProgress size={16} color="primary" />}
             &nbsp;Đăng ký

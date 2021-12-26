@@ -14,7 +14,7 @@ import { Router } from "react-router-dom";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#F7346F",
+      main: "#411196",
     },
     white: {
       main: "#fff",

@@ -3,11 +3,15 @@ import createSagaMiddleware from "redux-saga";
 import { mySaga } from "./mySaga";
 import loginReducers from "features/login/loginSlice";
 import registerReducers from "features/register/RegisterSlice";
+import roomReducers from "features/room/roomSlice";
+import loadingReducers from "features/loading/loadingSlice";
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-  loginReducers: loginReducers,
-  registerReducers: registerReducers,
+  loginReducers,
+  registerReducers,
+  roomReducers,
+  loadingReducers,
 });
 
 export const store = configureStore({

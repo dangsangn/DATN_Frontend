@@ -1,14 +1,26 @@
 import { Button, Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Banner from "./components/Banner";
-import RoomItem from "./components/RoomItem";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Box } from "@mui/system";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import RoomItem from "features/room/components/RoomItem";
+import { roomActions } from "features/room/roomSlice";
 const Home = () => {
   const login = useSelector((state) => state.loginReducers);
+  const listRoom = useSelector((state) => state.roomReducers.listRoom);
+  // console.log(listRoom);
+  const dispatch = useDispatch();
+  const [filter, setFilter] = useState({
+    _limit: 10,
+    _page: 1,
+    new: true,
+  });
   console.log(login);
+  useEffect(() => {
+    dispatch(roomActions.getListRomm(filter));
+  }, [dispatch, filter]);
   return (
     <Wrapper>
       <WrapBanner>
@@ -24,9 +36,9 @@ const Home = () => {
                   Xem tất cả
                 </Button>
               </TitleListRoom>
-              <RoomItem />
-              <RoomItem />
-              <RoomItem />
+              {listRoom.map((item) => (
+                <RoomItem key={item._id} data={item} />
+              ))}
             </ListRoomContent>
           </Grid>
           <Grid item md={4}>
@@ -42,7 +54,9 @@ const Home = () => {
                   Xem tất cả
                 </Button>
               </TitleListRoom>
-              <RoomItem verify={true} />
+              {listRoom.map((item) => (
+                <RoomItem vertical={true} key={item._id} data={item} />
+              ))}
             </ListRoomContent>
           </Grid>
         </Grid>

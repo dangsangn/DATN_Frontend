@@ -24,7 +24,7 @@ function* handleLogout() {
 function* watchLoginFlow() {
   while (true) {
     const isLogin = Boolean(sessionStorage.getItem("access_token"));
-    console.log(isLogin);
+    // console.log(isLogin);
     if (!isLogin) {
       const actions = yield take(loginActions.login);
       yield fork(handleLogin, actions.payload);

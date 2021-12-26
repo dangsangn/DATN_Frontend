@@ -1,4 +1,5 @@
 import UserLayout from "components/Layout/UserLayout";
+import Loading from "features/loading/Loading";
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 
@@ -29,12 +30,13 @@ function App() {
     };
     getUser();
   }, []);
-  console.log(user);
+  // console.log(user);
   return (
     <>
       <Switch>
         <Route path="/">
           <UserLayout />
+          <Loading />
         </Route>
       </Switch>
     </>

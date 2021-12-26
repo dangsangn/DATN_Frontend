@@ -33,10 +33,20 @@ const FormLogin = () => {
     <Wrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box mt={1}>
-          <InputField name="username" control={control} label="Tên đăng nhập" />
+          <InputField
+            name="username"
+            control={control}
+            label="Tên đăng nhập"
+            placeholder="Tên đăng nhập"
+          />
         </Box>
         <Box mt={1}>
-          <PasswordField name="password" control={control} label="Mật khẩu" />
+          <PasswordField
+            name="password"
+            control={control}
+            label="Mật khẩu"
+            placeholder="Mật khẩu"
+          />
         </Box>
         <Box mt={2}>
           <Button
@@ -45,6 +55,7 @@ const FormLogin = () => {
             color="primary"
             disabled={isSubmitting}
             fullWidth
+            sx={{ padding: "8px" }}
           >
             {isSubmitting && <CircularProgress size={16} color="primary" />}
             &nbsp;Đăng nhập

@@ -3,6 +3,7 @@ import Header from "components/commons/Header";
 import Home from "features/home/Home";
 import Login from "features/login/Login";
 import Register from "features/register/Register";
+import AddRoomPage from "features/room/AddRommpage";
 import RoomateDetail from "features/roommate/RoomateDetail";
 import Roommate from "features/roommate/Roommate";
 import React from "react";
@@ -27,6 +28,9 @@ const UserLayout = () => {
           </Route>
           <Route path="/romemate">
             <Roommate />
+          </Route>
+          <Route path="/post-room">
+            <AddRoomPage />
           </Route>
           <Route path="/">
             <Home />
