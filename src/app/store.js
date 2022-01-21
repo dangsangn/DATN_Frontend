@@ -5,6 +5,8 @@ import loginReducers from "features/login/loginSlice";
 import registerReducers from "features/register/RegisterSlice";
 import roomReducers from "features/room/roomSlice";
 import loadingReducers from "features/loading/loadingSlice";
+import userReducers from "features/user/userSlice";
+
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
@@ -12,6 +14,7 @@ const rootReducer = combineReducers({
   registerReducers,
   roomReducers,
   loadingReducers,
+  userReducers,
 });
 
 export const store = configureStore({

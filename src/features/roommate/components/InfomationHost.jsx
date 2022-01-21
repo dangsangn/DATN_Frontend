@@ -2,7 +2,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import React from "react";
 import styled from "styled-components";
 import { themes } from "themes";
-const InfomationHost = () => {
+import moment from "moment";
+const InfomationHost = ({ createdAt }) => {
   return (
     <Wrapper>
       <WrapTitle>
@@ -18,7 +19,9 @@ const InfomationHost = () => {
         </ContentItem>
         <ContentItem>
           <TitleContent>Ngày đăng: </TitleContent>
-          <DescriptionContent>11-11-2021</DescriptionContent>
+          <DescriptionContent>
+            {moment(createdAt).format("DD-MM-YYYY")}
+          </DescriptionContent>
         </ContentItem>
       </WrapContent>
     </Wrapper>
@@ -61,7 +64,7 @@ const WrapTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
   background-color: ${themes.backgroundLight};
-  padding: 8px;
+  padding: 8px 24px 8px 8px;
   border-radius: 24px;
 `;
 const Wrapper = styled.div`

@@ -6,6 +6,7 @@ import ViewCompactIcon from "@mui/icons-material/ViewCompact";
 import RoomIcon from "@mui/icons-material/Room";
 import ImageTemp from "images/image1.jpg";
 import { themes } from "themes";
+import { useHistory } from "react-router-dom";
 
 const showGender = (number = 3) => {
   let result;
@@ -46,40 +47,45 @@ const showTypeRoom = (number = 1) => {
   return result;
 };
 
-const showAddress = (address, ward, district, city) => {
+const showAddress = (numberHome, nameStress, ward, district, city) => {
   return (
-    address +
-    (ward ? ward : "") +
-    (district ? district : "") +
-    (city ? city : "")
+    numberHome +
+    " " +
+    nameStress +
+    " " +
+    (ward ? ward?.label + ", " : "") +
+    (district ? district?.label + ", " : "") +
+    (city ? city?.label : "")
   );
 };
 
 const RoomItem = (props) => {
+  const history = useHistory();
   const { data, vertical } = props;
-  // console.log(data);
+  // console.log("data", data);
   const {
-    idUser,
-    name,
+    _id,
     type,
     gender,
-    address,
-    priceRom,
-    area,
+    numberHome,
+    nameStress,
+    stretch,
     ward,
     district,
     city,
-    capacity,
-    priceElectric,
-    priceWater,
-    priceWifi,
-    status,
-    images,
-    numberRoom,
-    description,
   } = data;
+
+  // console.log(_id);
+
+  const handleShowInfoRoom = () => {
+    history.push("/room/" + _id);
+  };
   return (
-    <Wrapper className="room-item" vertical={vertical}>
+    <Wrapper
+      onClick={handleShowInfoRoom}
+      className="room-item"
+      vertical={vertical}
+    >
       <WrapSub vertical={vertical}>
         <WrapHeader vertical={vertical}>
           <WrapImage vertical={vertical}>
@@ -96,7 +102,7 @@ const RoomItem = (props) => {
           <Title>
             {showTypeRoom(type) +
               " " +
-              showAddress(address, ward, district, city)}
+              showAddress(numberHome, nameStress, ward, district, city)}
           </Title>
           <WrapInfo>
             <WrapIcon>
@@ -115,7 +121,7 @@ const RoomItem = (props) => {
               <WrapIcon>
                 <ViewCompactIcon />
               </WrapIcon>
-              <ContentInfo>{area} m2</ContentInfo>
+              <ContentInfo>{stretch} m2</ContentInfo>
             </WrapInfo>
           </WrapBoxHorizontal>
           <WrapInfo>
@@ -123,7 +129,7 @@ const RoomItem = (props) => {
               <RoomIcon />
             </WrapIcon>
             <ContentInfo>
-              {showAddress(address, ward, district, city)}
+              {showAddress(numberHome, nameStress, ward, district, city)}
             </ContentInfo>
           </WrapInfo>
         </WrapContent>

@@ -7,6 +7,7 @@ const initialState = {
     images: [],
     utilities: [],
   },
+  isCreate: false,
 };
 
 const roomSlice = createSlice({
@@ -27,6 +28,13 @@ const roomSlice = createSlice({
         ...action.payload,
       };
     },
+    createRoom: (state, action) => {
+      state.isCreate = false;
+    },
+    createRoomSuccess: (state, action) => {
+      state.isCreate = true;
+    },
+    createRoomError: (state, action) => {},
   },
 });
 

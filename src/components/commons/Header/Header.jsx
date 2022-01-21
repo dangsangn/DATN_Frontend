@@ -1,10 +1,10 @@
-import { publictRouter } from "data/routers";
 import { useCheckscrollDown } from "hook/checkScrollDown";
-import Logo from "images/home.png";
+import Logo from "images/home.jpg";
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { themes } from "themes";
+import Routerheader from "./RouterHeader";
 const Header = () => {
   const isDown = useCheckscrollDown();
   return (
@@ -14,15 +14,7 @@ const Header = () => {
           <WrapLogo to="">
             <img src={Logo} alt="" />
           </WrapLogo>
-          <ListMenu>
-            {publictRouter.map((item) => (
-              <ItemMenu key={item.name}>
-                <LinkMenu classnameactive="active" to={item.path}>
-                  {item.name}
-                </LinkMenu>
-              </ItemMenu>
-            ))}
-          </ListMenu>
+          <Routerheader />
         </Container>
       </WrapContent>
     </WrapHeader>
@@ -34,27 +26,9 @@ const WrapContent = styled.div`
   max-width: 1440px;
   margin: auto;
 `;
-const LinkMenu = styled(NavLink)`
-  font-size: 18px;
-  font-weight: 500;
-  font-family: ${themes.fontFamilySecond};
-  transition: all 0.4s ease-in-out;
-  &:hover {
-    color: ${themes.primary};
-  }
-`;
-const ItemMenu = styled.li`
-  margin: 0 16px;
-  &:last-child {
-    margin-right: 0;
-  }
-`;
-const ListMenu = styled.ul`
-  display: flex;
-  align-items: center;
-`;
+
 const WrapLogo = styled(Link)`
-  width: 46px;
+  width: 70px;
   height: 46px;
   display: block;
 `;

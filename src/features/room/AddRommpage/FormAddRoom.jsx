@@ -1,28 +1,98 @@
-import React, { useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import styled from "styled-components";
-import FormAddress from "../components/FormAddress";
-import FormInfoRoom from "../components/FormInfoRoom";
 import {
   getDistrictOfCity,
   getProvincesApi,
   getWardOfDistrict,
 } from "apis/address";
+import React, { useEffect, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import FormAddress from "../components/FormAddress";
+import FormInfoRoom from "../components/FormInfoRoom";
 import FormUtilities from "../components/FormUtilities";
-import FormAddRoomSuccess from "./FormAddRoomSuccess";
-import { imageUploadApi } from "apis/uploadImage";
-import { useDispatch } from "react-redux";
-import { loadingActions } from "features/loading/loadingSlice";
 import { roomActions } from "../roomSlice";
+import FormAddRoomSuccess from "./FormAddRoomSuccess";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+const schema = yup.object().shape({
+  typeRoom: yup.string().required("Please choose a room type"),
+  quantityRoom: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter quantity room."),
+  capacity: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter capacity."),
+  gender: yup.string().required("Please a choose gender"),
+  stretch: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(10, "Min is 10")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter stretch."),
+  priceRoom: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter price Room."),
+  priceDeposit: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter price Deposit."),
+  priceElectric: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter price Electric."),
+  priceWater: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter price Water."),
+  priceWifi: yup
+    .number()
+    .positive("Please enter a positive number.")
+    .min(1, "Min is 1")
+    .typeError("Please enter a valid number.")
+    .required("Plase enter price Wifi."),
+  city: yup.object().required("Please choose a city"),
+  district: yup.object().required("Please choose a district"),
+  ward: yup.object().required("Please choose a ward"),
+  nameStress: yup.string().required("Please enter a name Stress"),
+  numberHome: yup.string().required("Please enter a number Home"),
+  images: yup.array().required("Please choose images"),
+  utilities: yup.array().required("Please choose a utilities"),
+  description: yup.string().required("Please enter description"),
+});
 
 const FormAddRoom = ({ handleComplete, activeStep }) => {
+  const { isCreate } = useSelector((state) => state.roomReducers);
   const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
     watch,
     formState: { isSubmitting },
-  } = useForm({});
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
+  useEffect(() => {
+    if (isCreate) {
+      handleComplete();
+    }
+  }, [isCreate]);
+
   const handleCompleteSuccess = () => {
     handleComplete();
   };
@@ -68,21 +138,30 @@ const FormAddRoom = ({ handleComplete, activeStep }) => {
 
   const handleSubmitForm = async (data) => {
     console.log(data);
-    const imageFiles = data.images.map((item) => item.url);
-    const formData = new FormData();
-    dispatch(loadingActions.startLoading());
-    try {
-      if (imageFiles.length > 0) {
-        imageFiles.forEach((item) => formData.append("image", item));
-        const responseUrls = await imageUploadApi(formData);
-        dispatch(loadingActions.setMessageSuccess("Create a room success"));
-        dispatch(
-          roomActions.inforFormTemporary({ images: responseUrls.data.data })
-        );
-        console.log(responseUrls);
-      }
-    } catch (error) {}
-    handleCompleteSuccess();
+    const sendForm = {
+      nameStress: data?.nameStress,
+      numberHome: data?.numberHome,
+      priceRoom: +data?.numberHome,
+      priceDeposit: +data?.priceDeposit,
+      typeRoom: +data?.typeRoom,
+      stretch: +data?.stretch,
+      gender: +data?.gender,
+      capacity: +data?.capacity,
+      priceElectric: +data?.priceElectric,
+      priceWater: +data?.priceWater,
+      priceWifi: +data?.priceWifi,
+      images: data?.images,
+      utilities: data?.utilities,
+      quantityRoom: +data?.quantityRoom,
+      ordered: 0,
+      description: data?.description,
+      verify: false,
+      ward: data?.ward,
+      district: data?.district,
+      city: data?.city,
+    };
+    dispatch(roomActions.createRoom(sendForm));
+    // handleCompleteSuccess();
   };
 
   const showContent = (option) => {

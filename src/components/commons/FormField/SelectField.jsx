@@ -39,5 +39,5 @@ export const SelectField = ({
 const Label = styled.label`
   display: inline-block;
   margin-bottom: 4px;
-  font-size: 14px;
+  font-size: 12px;
 `;

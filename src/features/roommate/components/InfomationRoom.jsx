@@ -3,7 +3,22 @@ import styled from "styled-components";
 import HomeIcon from "@mui/icons-material/Home";
 import { themes } from "themes";
 import { Grid } from "@mui/material";
-const InfomationRoom = () => {
+const InfomationRoom = ({
+  priceRoom,
+  stretch,
+  priceDeposit,
+  priceWater,
+  priceWifi,
+  priceElectric,
+  ordered,
+  quantityRoom,
+  ward,
+  district,
+  city,
+  nameStress,
+  numberHome,
+  capacity,
+}) => {
   return (
     <Wrapper>
       <WrapTitle>
@@ -17,36 +32,62 @@ const InfomationRoom = () => {
           <Grid item>
             <ContentItem>
               <TitleContent>GIÁ PHÒNG</TitleContent>
-              <DescriptionContent>1,500,000 đồng</DescriptionContent>
+              <DescriptionContent>{priceRoom} đồng</DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
             <ContentItem>
               <TitleContent>DIỆN TÍCH</TitleContent>
-              <DescriptionContent>40 mét vuông</DescriptionContent>
+              <DescriptionContent>{stretch} mét vuông</DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
             <ContentItem>
               <TitleContent>ĐẶT CỌC</TitleContent>
-              <DescriptionContent>1,500,000 đồng</DescriptionContent>
+              <DescriptionContent>{priceDeposit} đồng</DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
             <ContentItem>
               <TitleContent>SỨC CHỨA</TitleContent>
-              <DescriptionContent>4 Nam hoặc Nữ</DescriptionContent>
+              <DescriptionContent>{capacity} Nam hoặc Nữ</DescriptionContent>
+            </ContentItem>
+          </Grid>
+          <Grid item>
+            <ContentItem>
+              <TitleContent>ĐIỆN</TitleContent>
+              <DescriptionContent>{priceElectric} đồng</DescriptionContent>
+            </ContentItem>
+          </Grid>
+          <Grid item>
+            <ContentItem>
+              <TitleContent>NƯỚC</TitleContent>
+              <DescriptionContent>{priceWater} đồng</DescriptionContent>
+            </ContentItem>
+          </Grid>
+          <Grid item>
+            <ContentItem>
+              <TitleContent>WIFI</TitleContent>
+              <DescriptionContent>{priceWifi} đồng</DescriptionContent>
             </ContentItem>
           </Grid>
         </Grid>
         <ContentItem>
           <TitleContent>TRẠNG THÁI</TitleContent>
-          <StyleDescriptionContent>0/4</StyleDescriptionContent>
+          <StyleDescriptionContent>
+            {ordered}/{quantityRoom}
+          </StyleDescriptionContent>
         </ContentItem>
         <ContentItem>
           <TitleContent>ĐIẠ CHỈ</TitleContent>
           <DescriptionContent>
-            335 cầu giấy Cầu giấy, Phường Dịch Vọng, Quận Cầu Giấy, Hà Nội
+            {numberHome +
+              " " +
+              nameStress +
+              ", " +
+              (ward ? ward?.label + ", " : "") +
+              (district ? district?.label + ", " : "") +
+              (city ? city?.label : "")}
           </DescriptionContent>
         </ContentItem>
       </WrapContent>
@@ -89,7 +130,7 @@ const WrapTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
   background-color: ${themes.backgroundLight};
-  padding: 8px;
+  padding: 8px 24px 8px 8px;
   border-radius: 24px;
 `;
 const Wrapper = styled.div`

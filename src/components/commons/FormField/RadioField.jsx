@@ -48,5 +48,5 @@ export const RadioField = ({
 
 const Label = styled.label`
   display: inline-block;
-  font-size: 14px;
+  font-size: 12px;
 `;

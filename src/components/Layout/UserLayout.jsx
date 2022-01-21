@@ -1,5 +1,5 @@
 import Footer from "components/commons/Footer";
-import Header from "components/commons/Header";
+import Header from "components/commons/Header/Header";
 import Home from "features/home/Home";
 import Login from "features/login/Login";
 import Register from "features/register/Register";
@@ -23,10 +23,10 @@ const UserLayout = () => {
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/romemate/:id">
+          <Route path="/room/:id">
             <RoomateDetail />
           </Route>
-          <Route path="/romemate">
+          <Route path="/roomemate">
             <Roommate />
           </Route>
           <Route path="/post-room">

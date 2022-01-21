@@ -1,12 +1,33 @@
+import { getUserSuccessApi } from "apis/user";
 import UserLayout from "components/Layout/UserLayout";
 import Loading from "features/loading/Loading";
-import React, { useState, useEffect } from "react";
+import { userActions } from "features/user/userSlice";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const accessToken = localStorage.getItem("access_token");
+  const typeLogin = localStorage.getItem("typeLogin");
 
   useEffect(() => {
+    if (accessToken) {
+      dispatch(userActions.getProfile());
+    }
+  }, [dispatch, accessToken]);
+
+  useEffect(() => {
+    // const getUser = async () => {
+    //   console.log("1");
+    //   try {
+    //     const response = await getUserSuccessApi();
+    //     console.log("response", response);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // getUser();
     const getUser = () => {
       fetch("http://localhost:5000/api/auth/login/success", {
         method: "GET",
@@ -15,6 +36,7 @@ function App() {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "http://localhost:3000",
         },
       })
         .then((response) => {
@@ -22,15 +44,17 @@ function App() {
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          setUser(resObject.user);
+          localStorage.setItem("access_token", resObject?.accessToken);
         })
         .catch((err) => {
           console.log(err);
         });
     };
-    getUser();
-  }, []);
-  // console.log(user);
+    if (typeLogin === "social") {
+      getUser();
+    }
+  }, [accessToken, typeLogin, dispatch]);
+
   return (
     <>
       <Switch>

@@ -2,9 +2,11 @@ import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { AutocompleteField } from "components/commons/FormField/AutocompleteFiled";
 import { InputField } from "components/commons/FormField/InputField";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { color } from "themes";
+import { roomActions } from "../roomSlice";
 
 function FormAddress({
   handleCompleteSuccess,
@@ -14,16 +16,39 @@ function FormAddress({
   wards,
   watch,
 }) {
+  const [doneForm, setDoneForm] = useState(false);
+  const dispatch = useDispatch();
+  const { initialValueForm } = useSelector((state) => state.roomReducers);
+  const [valueForm, setValueForm] = useState();
+  React.useEffect(() => {
+    if (initialValueForm.city) {
+      setDoneForm(true);
+    }
+  }, [initialValueForm.city]);
+
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const { city, district, ward, nameStress, numberHome } = value;
       // console.log(city);
+      if (city && district && ward && nameStress && numberHome) {
+        setDoneForm(true);
+        setValueForm({
+          city,
+          district,
+          ward,
+          nameStress,
+          numberHome,
+        });
+      } else {
+        setDoneForm(false);
+      }
     });
     return () => subscription.unsubscribe();
   }, [watch]);
 
   const handleNextStep = () => {
     handleCompleteSuccess();
+    dispatch(roomActions.inforFormTemporary({ ...valueForm }));
   };
 
   return (
@@ -74,20 +99,19 @@ function FormAddress({
           />
         </GroupForm>
         <Button
-          onClick={handleNextStep}
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ padding: "8px" }}
+          disabled={!doneForm}
+          onClick={handleNextStep}
+          sx={{
+            padding: "8px",
+            backgroundColor: !doneForm
+              ? "#888 !important"
+              : color.primary.newPurple,
+            color: "white !important",
+          }}
         >
-          {/* {
-            <CircularProgress
-              sx={{ marginRight: "8px" }}
-              size={16}
-              color="white"
-            />
-          }
-          &nbsp; */}
           Tiếp theo
         </Button>
       </Container>

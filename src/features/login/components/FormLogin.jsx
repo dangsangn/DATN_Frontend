@@ -26,6 +26,7 @@ const FormLogin = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data) => {
+    localStorage.setItem("typeLogin", "default");
     dispatch(loginActions.login(data));
   };
 

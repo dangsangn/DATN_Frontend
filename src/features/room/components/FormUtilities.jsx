@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
+import { Box } from "@mui/system";
 import Checkbboxexpend from "components/commons/FormField/CheckbboxExpend";
-import Uploadfile from "components/commons/FormField/UploadFile";
+import Textarea from "components/commons/FormField/TextArea";
+import Uploadfile from "components/commons/UploadFile/UploadFile";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -10,11 +12,17 @@ import { roomActions } from "../roomSlice";
 const FormUtilities = ({ control, watch }) => {
   const dispatch = useDispatch();
   const [listUtilities, setListUtilities] = useState([]);
+  const [doneForm, setDoneForm] = useState(false);
 
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      const { images, utilities } = value;
-      setListUtilities(utilities);
+      const { images, utilities, description } = value;
+      if (images?.length > 0 && utilities?.length > 0 && description) {
+        setListUtilities(utilities);
+        setDoneForm(true);
+      } else {
+        setDoneForm(false);
+      }
     });
     return () => subscription.unsubscribe();
   }, [dispatch, watch]);
@@ -28,24 +36,30 @@ const FormUtilities = ({ control, watch }) => {
       <Label>Thông tin hình ảnh và tiện ích</Label>
       <Uploadfile name="images" control={control} />
       <Checkbboxexpend name="utilities" control={control} />
+      <Box mt={2}>
+        <Textarea
+          name="description"
+          control={control}
+          placeholder="description..."
+          label="Description"
+        />
+      </Box>
       <WrapButton>
         <Button
-          type="submit"
           variant="contained"
           color="primary"
-          // disabled={isSubmitting}
-          onClick={handleSaveDataForm}
           fullWidth
-          sx={{ padding: "8px" }}
+          disabled={!doneForm}
+          onClick={handleSaveDataForm}
+          type="submit"
+          sx={{
+            padding: "8px",
+            backgroundColor: !doneForm
+              ? "#888 !important"
+              : color.primary.newPurple,
+            color: "white !important",
+          }}
         >
-          {/* {
-            <CircularProgress
-              sx={{ marginRight: "8px" }}
-              size={16}
-              color="white"
-            />
-          }
-          &nbsp; */}
           Xác nhận
         </Button>
       </WrapButton>

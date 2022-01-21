@@ -1,5 +1,6 @@
 export const themes = {
   primary: "#411196",
+  white: "#fff",
   textLight: "#fdfdfd",
   textDark: "#333",
   fontFamilySecond: "Cabin, sans-serif",

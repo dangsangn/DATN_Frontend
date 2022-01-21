@@ -10,14 +10,14 @@ import { roomActions } from "features/room/roomSlice";
 const Home = () => {
   const login = useSelector((state) => state.loginReducers);
   const listRoom = useSelector((state) => state.roomReducers.listRoom);
-  // console.log(listRoom);
+  //console.log('listRoom',listRoom);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState({
     _limit: 10,
     _page: 1,
     new: true,
   });
-  console.log(login);
+  // console.log(login);
   useEffect(() => {
     dispatch(roomActions.getListRomm(filter));
   }, [dispatch, filter]);
@@ -63,7 +63,7 @@ const Home = () => {
       </WrapContent>
     </Wrapper>
   );
-};
+};;
 
 const WrapIconVerify = styled.div`
   margin-right: 8px;

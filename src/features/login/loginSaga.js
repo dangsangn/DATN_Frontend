@@ -1,39 +1,34 @@
-import { call, fork, put, take } from "@redux-saga/core/effects";
-import { loginActions } from "./loginSlice";
+import { call, put, takeEvery } from "@redux-saga/core/effects";
 import { login } from "apis/auth";
+import { loadingActions } from "features/loading/loadingSlice";
+import { userActions } from "features/user/userSlice";
 import history from "utils/history";
-function* handleLogin(payload) {
+import { loginActions } from "./loginSlice";
+function* handleLogin({ payload }) {
   try {
+    yield put(loadingActions.handleLoading(true));
     const res = yield call(login, payload);
     const { user, accessToken } = res.data;
-    sessionStorage.setItem("access_token", accessToken);
-    yield put(loginActions.loginSuccess({ ...user }));
-    console.log(user);
-    history.push("/");
+    if (accessToken) {
+      localStorage.setItem("access_token", accessToken);
+      yield put(loginActions.loginSuccess({ ...user }));
+      yield put(userActions.getProfile());
+      yield put(loadingActions.setMessageSuccess("Login success"));
+      history.push("/");
+    }
   } catch (error) {
-    yield put(loginActions.loginFailures("login failed"));
+    console.log(error);
+    yield put(loadingActions.setMessageError("Login failed"));
   }
 }
 
 function* handleLogout() {
-  sessionStorage.removeItem("access_token");
-  yield put(loginActions.logout());
+  yield put(userActions.clearProfile());
+  localStorage.removeItem("access_token");
   history.push("/login");
 }
 
-function* watchLoginFlow() {
-  while (true) {
-    const isLogin = Boolean(sessionStorage.getItem("access_token"));
-    // console.log(isLogin);
-    if (!isLogin) {
-      const actions = yield take(loginActions.login);
-      yield fork(handleLogin, actions.payload);
-    }
-    yield take(loginActions.logout);
-    //here use call is blocking to wait handle logout, if use fork is none blocking will run loop
-    yield call(handleLogout);
-  }
-}
 export function* loginSaga() {
-  yield fork(watchLoginFlow);
+  yield takeEvery(loginActions.login, handleLogin);
+  yield takeEvery(loginActions.logout, handleLogout);
 }

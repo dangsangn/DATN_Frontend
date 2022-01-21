@@ -5,7 +5,7 @@ import { InputField } from "components/commons/FormField/InputField";
 import { RadioField } from "components/commons/FormField/RadioField";
 import styled from "styled-components";
 import { color } from "themes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { roomActions } from "../roomSlice";
 const typeRooms = [
   {
@@ -47,11 +47,14 @@ const genders = [
 function FormInfoRoom({ handleCompleteSuccess, control, watch }) {
   const [valueForm, setValueForm] = useState();
   const dispatch = useDispatch();
-  //  const firstName = useWatch({
-  //    control,
-  //    name: "firstName", // without supply name will watch the entire form, or ['firstName', 'lastName'] to watch both
-  //    defaultValue: "default", // default value before the render
-  //  });
+  const [doneForm, setDoneForm] = useState(false);
+  const { initialValueForm } = useSelector((state) => state.roomReducers);
+
+  React.useEffect(() => {
+    if (initialValueForm.typeRoom) {
+      setDoneForm(true);
+    }
+  }, [initialValueForm.typeRoom]);
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const {
@@ -65,17 +68,32 @@ function FormInfoRoom({ handleCompleteSuccess, control, watch }) {
         priceElectric,
         priceWifi,
       } = value;
-      setValueForm({
-        typeRoom,
-        quantityRoom,
-        capacity,
-        gender,
-        stretch,
-        priceRoom,
-        priceDeposit,
-        priceElectric,
-        priceWifi,
-      });
+      if (
+        typeRoom &&
+        quantityRoom &&
+        capacity &&
+        gender &&
+        stretch &&
+        priceRoom &&
+        priceDeposit &&
+        priceElectric &&
+        priceWifi
+      ) {
+        setDoneForm(true);
+        setValueForm({
+          typeRoom,
+          quantityRoom,
+          capacity,
+          gender,
+          stretch,
+          priceRoom,
+          priceDeposit,
+          priceElectric,
+          priceWifi,
+        });
+      } else {
+        setDoneForm(false);
+      }
     });
     return () => subscription.unsubscribe();
   }, [watch]);
@@ -177,11 +195,18 @@ function FormInfoRoom({ handleCompleteSuccess, control, watch }) {
           />
         </GroupForm>
         <Button
-          onClick={handleNextStep}
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ padding: "8px" }}
+          disabled={!doneForm}
+          onClick={handleNextStep}
+          sx={{
+            padding: "8px",
+            backgroundColor: !doneForm
+              ? "#888 !important"
+              : color.primary.newPurple,
+            color: "white !important",
+          }}
         >
           Tiếp theo
         </Button>

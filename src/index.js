@@ -22,6 +22,9 @@ const theme = createTheme({
     blue: {
       main: "#4877F8",
     },
+    print: {
+      main: "#fe0b95",
+    },
   },
 });
 

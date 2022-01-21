@@ -1,6 +1,11 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Alert, Collapse, IconButton, Stack } from "@mui/material";
-import LoadingIcon from "images/loading.gif";
+import {
+  Alert,
+  CircularProgress,
+  Collapse,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -19,7 +24,7 @@ const Loading = () => {
         <Wrapper>
           <Overlay>
             <WrapIconLoading>
-              <img src={LoadingIcon} alt="" />
+              <CircularProgress color="white" />
             </WrapIconLoading>
           </Overlay>
         </Wrapper>
@@ -87,7 +92,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
