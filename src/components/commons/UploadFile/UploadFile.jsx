@@ -19,7 +19,9 @@ const Uploadfile = ({ name, control }) => {
   } = useController({ name, control });
   const [files, setFiles] = useState(() => {
     if (images.length > 0) {
-      return images.map((item) => ({ id: Math.random(), url: item }));
+      return images
+        .filter((item) => item)
+        .map((item) => ({ id: Math.random(), url: item }));
     } else {
       return [];
     }
@@ -61,7 +63,7 @@ const Uploadfile = ({ name, control }) => {
           type="file"
           id="upload"
           multiple
-          accept=".png, .jpg"
+          accept=".png, .jpg, .jfif"
           onChange={handleUploadFile}
           // name={name}
         />

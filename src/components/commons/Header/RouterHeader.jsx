@@ -1,24 +1,23 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import Logout from "@mui/icons-material/Logout";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Box } from "@mui/system";
+import { loginActions } from "features/login/loginSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { themes } from "themes";
-import { loginActions } from "features/login/loginSlice";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 
 const Routerheader = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducers);
-  // console.log("user", user, isLogin);
+  // console.log("user", user);
   const [anchorEl, setAnchorEl] = React.useState();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -33,70 +32,77 @@ const Routerheader = () => {
   };
   return (
     <ListMenu>
-      <ItemMenu key="romemate">
-        <LinkMenu classnameactive="active" to="/romemate">
-          Ở ghép
-        </LinkMenu>
-      </ItemMenu>
       {user?.username ? (
-        <ItemMenu>
-          <Box>
-            <MAvatar
-              onClick={handleClick}
-              alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
-            />
-          </Box>
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleClose}
-            onClick={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
+        <>
+          <ItemMenu key="postRoom">
+            <LinkMenu classnameactive="active" to="/post-room">
+              <AddBusinessIcon /> <span>Đăng phòng</span>
+            </LinkMenu>
+          </ItemMenu>
+          <ItemMenu key="myRoom">
+            <LinkMenu classnameactive="active" to="/my-room">
+              Bài đăng
+            </LinkMenu>
+          </ItemMenu>
+          <ItemMenu key="conversation">
+            <LinkMenu classnameactive="active" to="/conversation">
+              Hộp thoại
+            </LinkMenu>
+          </ItemMenu>
+          <ItemMenu>
+            <Box>
+              <MButton variant="outlined" onClick={handleClick}>
+                {user?.username}
+              </MButton>
+            </Box>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
                 },
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-          >
-            <MenuItem>
-              <AccountCircleIcon /> <Text>Profile</Text>
-            </MenuItem>
-            <MenuItem onClick={() => history.push("/post-room")}>
-              <AddBusinessIcon /> <Text>Đăng phòng</Text>
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              Đăng xuất
-            </MenuItem>
-          </Menu>
-        </ItemMenu>
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem onClick={() => history.push("/profile")}>
+                <AccountCircleIcon /> <Text>Profile</Text>
+              </MenuItem>
+
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Đăng xuất
+              </MenuItem>
+            </Menu>
+          </ItemMenu>
+        </>
       ) : (
         <>
           <ItemMenu key="login">
@@ -115,13 +121,18 @@ const Routerheader = () => {
   );
 };
 
+const MButton = styled(Button)`
+  text-transform: initial !important;
+  border-radius: 16px !important;
+  border-width: 2px !important;
+`;
 const Text = styled.span`
   margin-left: 12px;
 `;
-const MAvatar = styled(Avatar)`
-  cursor: pointer;
-`;
+
 const LinkMenu = styled(NavLink)`
+  display: flex;
+  align-items: center;
   font-size: 18px;
   font-weight: 500;
   font-family: ${themes.fontFamilySecond};

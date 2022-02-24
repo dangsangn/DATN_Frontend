@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { themes } from "themes";
 import moment from "moment";
-const InfomationHost = ({ createdAt }) => {
+const InfomationHost = ({ createdAt, owner }) => {
   return (
     <Wrapper>
       <WrapTitle>
@@ -14,8 +14,10 @@ const InfomationHost = ({ createdAt }) => {
       </WrapTitle>
       <WrapContent>
         <ContentItem>
-          <TitleContent>Henry Nguyễn</TitleContent>
-          <StyleDescriptionContent>SDT: 0383291623</StyleDescriptionContent>
+          <TitleContent>{owner?.username}</TitleContent>
+          <StyleDescriptionContent>
+            SDT: {owner?.phoneNumber}
+          </StyleDescriptionContent>
         </ContentItem>
         <ContentItem>
           <TitleContent>Ngày đăng: </TitleContent>
@@ -48,7 +50,7 @@ const DescriptionContent = styled.p`
 `;
 const TitleContent = styled.h4`
   color: #555;
-  font-size: 14px;
+  font-size: 16px;
 `;
 const StyleDescriptionContent = styled(DescriptionContent)`
   font-weight: bold;

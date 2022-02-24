@@ -3,34 +3,35 @@ import styled from "styled-components";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Button } from "@mui/material";
 import history from "utils/history";
+import { useLocation } from "react-router-dom";
 
 const Noticesuccess = () => {
+  const location = useLocation();
+  const idRoom = location?.state?.idRoom;
   const handleClick = () => {
-    history.push("/");
+    if (idRoom) {
+      history.push("/my-room");
+    } else {
+      history.push("/");
+    }
   };
   return (
     <Wrapper>
       <WrapperIcon>
         <CheckCircleOutlineIcon sx={{ fontSize: 80 }} />
       </WrapperIcon>
-      <Description>Bạn đã đăng phòng thành công</Description>
+      <Description>
+        {idRoom ? "Bạn đã cập nhật" : "Bạn đã đăng"} phòng thành công!
+      </Description>
       <WrapperButton>
         <Button
           onClick={handleClick}
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ padding: "8px" }}
+          sx={{ padding: "8px", textTransform: "initial !important" }}
         >
-          {/* {
-            <CircularProgress
-              sx={{ marginRight: "8px" }}
-              size={16}
-              color="white"
-            />
-          }
-          &nbsp; */}
-          Về trang chủ
+          {idRoom ? "Về bài đăng" : "Về trang chủ"}
         </Button>
       </WrapperButton>
     </Wrapper>
@@ -38,7 +39,7 @@ const Noticesuccess = () => {
 };
 
 const WrapperButton = styled.div``;
-const Description = styled.h3`
+const Description = styled.h4`
   margin-bottom: 12px;
 `;
 const WrapperIcon = styled.div`

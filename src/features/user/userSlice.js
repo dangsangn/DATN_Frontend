@@ -16,6 +16,11 @@ const userSlice = createSlice({
     clearProfile: (state, action) => {
       state.user = {};
     },
+    updatePassword: (state, action) => {},
+    updateProfile: (state, action) => {},
+    updateProfileSuccess: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 

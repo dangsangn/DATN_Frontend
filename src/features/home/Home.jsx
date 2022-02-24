@@ -7,20 +7,29 @@ import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import RoomItem from "features/room/components/RoomItem";
 import { roomActions } from "features/room/roomSlice";
+import { Link } from "react-router-dom";
+import { themes } from "themes";
+import history from "utils/history";
 const Home = () => {
-  const login = useSelector((state) => state.loginReducers);
-  const listRoom = useSelector((state) => state.roomReducers.listRoom);
-  //console.log('listRoom',listRoom);
+  const { listRoom, listRoomVerified } = useSelector(
+    (state) => state.roomReducers
+  );
   const dispatch = useDispatch();
   const [filter, setFilter] = useState({
     _limit: 10,
     _page: 1,
-    new: true,
   });
-  // console.log(login);
   useEffect(() => {
     dispatch(roomActions.getListRomm(filter));
+    dispatch(roomActions.getListRoomVerify({ ...filter, verify: true }));
   }, [dispatch, filter]);
+
+  const handleGotoAllViewRoom = () => {
+    history.push("/view-all-room");
+  };
+  const handleGotoAllViewRoomVerify = () => {
+    history.push("/view-all-room?verify=true");
+  };
   return (
     <Wrapper>
       <WrapBanner>
@@ -32,13 +41,20 @@ const Home = () => {
             <ListRoomContent>
               <TitleListRoom>
                 Phòng mới nhất{" "}
-                <Button color="blue" variant="outlined">
+                <MButton
+                  color="primary"
+                  variant="outlined"
+                  onClick={handleGotoAllViewRoom}
+                >
                   Xem tất cả
-                </Button>
+                </MButton>
               </TitleListRoom>
               {listRoom.map((item) => (
                 <RoomItem key={item._id} data={item} />
               ))}
+              <WrapLinkFooter>
+                <LinkFooter to="/view-all-room">Xem tất cả </LinkFooter>
+              </WrapLinkFooter>
             </ListRoomContent>
           </Grid>
           <Grid item md={4}>
@@ -50,21 +66,41 @@ const Home = () => {
                   </WrapIconVerify>
                   Đã xác thực
                 </Box>
-                <Button color="blue" variant="outlined">
+                <MButton
+                  color="primary"
+                  variant="outlined"
+                  onClick={handleGotoAllViewRoomVerify}
+                >
                   Xem tất cả
-                </Button>
+                </MButton>
               </TitleListRoom>
-              {listRoom.map((item) => (
+              {listRoomVerified.map((item) => (
                 <RoomItem vertical={true} key={item._id} data={item} />
               ))}
+              <WrapLinkFooter>
+                <LinkFooter to="/view-all-room?verify=true">
+                  Xem tất cả{" "}
+                </LinkFooter>
+              </WrapLinkFooter>
             </ListRoomContent>
           </Grid>
         </Grid>
       </WrapContent>
     </Wrapper>
   );
-};;
+};
 
+const WrapLinkFooter = styled.div`
+  text-align: center;
+`;
+const LinkFooter = styled(Link)`
+  color: ${themes.primary};
+`;
+const MButton = styled(Button)`
+  border-radius: 16px !important;
+  border-width: 2px !important;
+  text-transform: initial !important;
+`;
 const WrapIconVerify = styled.div`
   margin-right: 8px;
   display: flex;

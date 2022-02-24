@@ -5,8 +5,8 @@ import { color } from "themes";
 
 const Textarea = ({ name, control, label, placeholder }) => {
   const {
-    field: { onChange, onBlur, value, ref },
-    fieldState: { invalid, error },
+    field: { onChange, value },
+    fieldState: { error },
   } = useController({ name, control });
   return (
     <Wrapper>
@@ -34,6 +34,7 @@ const MInput = styled.textarea`
   border-radius: 8px;
   border: 1px solid #d3d3d3;
   padding: 8px;
+  font-size: 16px;
   &:focus {
     outline: none !important;
     border: 2px solid ${color.primary.newPurple};

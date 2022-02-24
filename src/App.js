@@ -1,10 +1,12 @@
-import { getUserSuccessApi } from "apis/user";
+import { getUserSuccessApi } from "features/user/api";
+import { AdminLayout } from "components/Layout/AdminLayout";
 import UserLayout from "components/Layout/UserLayout";
 import Loading from "features/loading/Loading";
 import { userActions } from "features/user/userSlice";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import MessageLayout from "components/Layout/MessageLayout";
 
 function App() {
   const dispatch = useDispatch();
@@ -58,11 +60,11 @@ function App() {
   return (
     <>
       <Switch>
-        <Route path="/">
-          <UserLayout />
-          <Loading />
-        </Route>
+        <Route path="/admin" component={AdminLayout} />
+        <Route path="/conversation" component={MessageLayout} />
+        <Route path="/" component={UserLayout} />
       </Switch>
+      <Loading />
     </>
   );
 }

@@ -29,7 +29,6 @@ function FormAddress({
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       const { city, district, ward, nameStress, numberHome } = value;
-      // console.log(city);
       if (city && district && ward && nameStress && numberHome) {
         setDoneForm(true);
         setValueForm({

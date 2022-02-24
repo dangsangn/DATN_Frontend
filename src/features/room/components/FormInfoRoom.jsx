@@ -21,7 +21,7 @@ const typeRooms = [
     value: 3,
   },
   {
-    label: "Ký túc xá",
+    label: "Phòng ở ghép",
     value: 4,
   },
   {
@@ -68,6 +68,7 @@ function FormInfoRoom({ handleCompleteSuccess, control, watch }) {
         priceElectric,
         priceWifi,
       } = value;
+      // console.log(typeRoom, quantityRoom, capacity);
       if (
         typeRoom &&
         quantityRoom &&
@@ -101,7 +102,7 @@ function FormInfoRoom({ handleCompleteSuccess, control, watch }) {
     handleCompleteSuccess();
     dispatch(roomActions.inforFormTemporary({ ...valueForm }));
   };
-
+  // console.log("initialValueForm", doneForm);
   return (
     <Wrapper>
       <Container>

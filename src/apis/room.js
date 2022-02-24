@@ -1,4 +1,4 @@
-import { authGet, authPost } from "./clientAxios";
+import { authGet, authPatch, authPost } from "./clientAxios";
 
 export const getRoomsApi = (stringParams) => {
   const url = `/room?${stringParams}`;
@@ -13,4 +13,9 @@ export const createRoomApi = (data) => {
 export const getDetailRoomApi = (id) => {
   const url = `/room/${id}`;
   return authGet(url);
+};
+
+export const updateRoomApi = ({ id, data }) => {
+  const url = "/room/" + id;
+  return authPatch(url, data);
 };

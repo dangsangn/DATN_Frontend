@@ -4,7 +4,6 @@ import {
   FormHelperText,
   IconButton,
   InputAdornment,
-  InputLabel,
   OutlinedInput,
 } from "@mui/material";
 import React, { useState } from "react";

@@ -1,8 +1,8 @@
 import React from 'react';
 import { CssBaseline } from "@mui/material";
 import ReactDOM from "react-dom";
-import "styles/index.css";
 import "styles/reset.css";
+import "styles/index.css";
 import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";

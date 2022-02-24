@@ -4,9 +4,10 @@ import HomeIcon from "@mui/icons-material/Home";
 import GroupIcon from "@mui/icons-material/Group";
 import ViewCompactIcon from "@mui/icons-material/ViewCompact";
 import RoomIcon from "@mui/icons-material/Room";
-import ImageTemp from "images/image1.jpg";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { themes } from "themes";
 import { useHistory } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const showGender = (number = 3) => {
   let result;
@@ -29,16 +30,16 @@ const showTypeRoom = (number = 1) => {
   let result;
   switch (number) {
     case 1:
-      result = "Phòng cho thuê";
-      break;
-    case 2:
       result = "Ký túc xá";
       break;
+    case 2:
+      result = "Phòng cho thuê";
+      break;
     case 3:
-      result = "Phòng ở ghép";
+      result = "Nhà nguyên căn";
       break;
     case 4:
-      result = "Phòng nguyên căn";
+      result = "Phòng ở ghép";
       break;
     default:
       result = "Căn hộ";
@@ -52,7 +53,7 @@ const showAddress = (numberHome, nameStress, ward, district, city) => {
     numberHome +
     " " +
     nameStress +
-    " " +
+    ", " +
     (ward ? ward?.label + ", " : "") +
     (district ? district?.label + ", " : "") +
     (city ? city?.label : "")
@@ -65,7 +66,7 @@ const RoomItem = (props) => {
   // console.log("data", data);
   const {
     _id,
-    type,
+    typeRoom,
     gender,
     numberHome,
     nameStress,
@@ -73,6 +74,9 @@ const RoomItem = (props) => {
     ward,
     district,
     city,
+    priceRoom,
+    images,
+    verify,
   } = data;
 
   // console.log(_id);
@@ -89,18 +93,23 @@ const RoomItem = (props) => {
       <WrapSub vertical={vertical}>
         <WrapHeader vertical={vertical}>
           <WrapImage vertical={vertical}>
-            <Image src={ImageTemp}></Image>
+            <Image src={images[0]}></Image>
+            {verify && (
+              <WrapIconVerified>
+                <VerifiedUserIcon color="info" />
+              </WrapIconVerified>
+            )}
           </WrapImage>
           {vertical && (
             <WrapPrice>
-              <Price>2,5</Price>
-              <TextPrice>tr/người</TextPrice>
+              <Price>{Number.parseFloat(priceRoom / 1000000).toFixed(1)}</Price>
+              <TextPrice>triệu VNĐ</TextPrice>
             </WrapPrice>
           )}
         </WrapHeader>
         <WrapContent vertical={vertical}>
           <Title>
-            {showTypeRoom(type) +
+            {showTypeRoom(typeRoom) +
               " " +
               showAddress(numberHome, nameStress, ward, district, city)}
           </Title>
@@ -108,7 +117,7 @@ const RoomItem = (props) => {
             <WrapIcon>
               <HomeIcon />
             </WrapIcon>
-            <ContentInfo>{showTypeRoom(type)}</ContentInfo>
+            <ContentInfo>{showTypeRoom(typeRoom)}</ContentInfo>
           </WrapInfo>
           <WrapBoxHorizontal>
             <WrapInfo>
@@ -136,14 +145,19 @@ const RoomItem = (props) => {
       </WrapSub>
       {!vertical && (
         <WrapPrice>
-          <Price>2,5</Price>
-          <TextPrice>tr/người</TextPrice>
+          <Price>{Number.parseFloat(priceRoom / 1000000).toFixed(1)}</Price>
+          <TextPrice>triệu VNĐ</TextPrice>
         </WrapPrice>
       )}
     </Wrapper>
   );
 };
 
+const WrapIconVerified = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+`;
 const WrapSub = styled.div`
   width: 100%;
   display: flex;
@@ -155,7 +169,9 @@ const WrapHeader = styled.div`
     props.vertical &&
     "display: flex;justify-content: space-between; align-items: center; width: 100%; margin-bottom:16px;"}
 `;
-const TextPrice = styled.p``;
+const TextPrice = styled.p`
+  min-width: 100px;
+`;
 const Price = styled.p`
   font-size: 60px !important;
   margin-bottom: 16px;
@@ -195,6 +211,7 @@ const WrapImage = styled.div`
   border-radius: 16px;
   overflow: hidden;
   width: 216px;
+  position: relative;
 `;
 const Wrapper = styled.div`
   display: flex;

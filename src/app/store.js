@@ -6,7 +6,12 @@ import registerReducers from "features/register/RegisterSlice";
 import roomReducers from "features/room/roomSlice";
 import loadingReducers from "features/loading/loadingSlice";
 import userReducers from "features/user/userSlice";
-
+import messagesReducers from "features/messages/MessageSlice";
+import roomDetailRenderers from "features/roommate/roomDetailSlice";
+import userAdminReducers from "features/admin/user/userAdminSlice";
+import roomAdminReducers from "features/admin/room/roomAdminSlice";
+import myPostReducers from "features/myPost/MyPostSlice";
+import orderReducers from "features/order/orderSlice";
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
@@ -15,6 +20,12 @@ const rootReducer = combineReducers({
   roomReducers,
   loadingReducers,
   userReducers,
+  roomDetailRenderers,
+  messagesReducers,
+  userAdminReducers,
+  roomAdminReducers,
+  myPostReducers,
+  orderReducers,
 });
 
 export const store = configureStore({

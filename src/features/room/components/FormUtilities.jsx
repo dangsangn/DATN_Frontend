@@ -4,7 +4,7 @@ import Checkbboxexpend from "components/commons/FormField/CheckbboxExpend";
 import Textarea from "components/commons/FormField/TextArea";
 import Uploadfile from "components/commons/UploadFile/UploadFile";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { color } from "themes";
 import { roomActions } from "../roomSlice";
@@ -13,6 +13,12 @@ const FormUtilities = ({ control, watch }) => {
   const dispatch = useDispatch();
   const [listUtilities, setListUtilities] = useState([]);
   const [doneForm, setDoneForm] = useState(false);
+  const { initialValueForm } = useSelector((state) => state.roomReducers);
+  React.useEffect(() => {
+    if (initialValueForm.description) {
+      setDoneForm(true);
+    }
+  }, [initialValueForm.description]);
 
   React.useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -35,7 +41,12 @@ const FormUtilities = ({ control, watch }) => {
     <Wrapper>
       <Label>Thông tin hình ảnh và tiện ích</Label>
       <Uploadfile name="images" control={control} />
-      <Checkbboxexpend name="utilities" control={control} />
+      <Checkbboxexpend
+        name="utilities"
+        control={control}
+        md={6}
+        label="Tiện ích"
+      />
       <Box mt={2}>
         <Textarea
           name="description"

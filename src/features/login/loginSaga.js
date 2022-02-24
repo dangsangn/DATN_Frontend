@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "@redux-saga/core/effects";
+import { call, put, takeEvery, takeLatest } from "@redux-saga/core/effects";
 import { login } from "apis/auth";
 import { loadingActions } from "features/loading/loadingSlice";
 import { userActions } from "features/user/userSlice";
@@ -14,7 +14,11 @@ function* handleLogin({ payload }) {
       yield put(loginActions.loginSuccess({ ...user }));
       yield put(userActions.getProfile());
       yield put(loadingActions.setMessageSuccess("Login success"));
-      history.push("/");
+      if (user.isAdmin) {
+        history.push("/admin/rooms");
+      } else {
+        history.push("/");
+      }
     }
   } catch (error) {
     console.log(error);
@@ -25,10 +29,10 @@ function* handleLogin({ payload }) {
 function* handleLogout() {
   yield put(userActions.clearProfile());
   localStorage.removeItem("access_token");
-  history.push("/login");
+  history.push("/");
 }
 
 export function* loginSaga() {
-  yield takeEvery(loginActions.login, handleLogin);
+  yield takeLatest(loginActions.login, handleLogin);
   yield takeEvery(loginActions.logout, handleLogout);
 }

@@ -1,19 +1,21 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   getDistrictOfCity,
   getProvincesApi,
   getWardOfDistrict,
 } from "apis/address";
+import { getDetailRoomApi } from "apis/room";
 import React, { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import * as yup from "yup";
 import FormAddress from "../components/FormAddress";
 import FormInfoRoom from "../components/FormInfoRoom";
 import FormUtilities from "../components/FormUtilities";
 import { roomActions } from "../roomSlice";
 import FormAddRoomSuccess from "./FormAddRoomSuccess";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup.object().shape({
   typeRoom: yup.string().required("Please choose a room type"),
   quantityRoom: yup
@@ -44,7 +46,7 @@ const schema = yup.object().shape({
   priceDeposit: yup
     .number()
     .positive("Please enter a positive number.")
-    .min(1, "Min is 1")
+    .min(0, "Min is 0")
     .typeError("Please enter a valid number.")
     .required("Plase enter price Deposit."),
   priceElectric: yup
@@ -62,7 +64,7 @@ const schema = yup.object().shape({
   priceWifi: yup
     .number()
     .positive("Please enter a positive number.")
-    .min(1, "Min is 1")
+    .min(0, "Min is 0")
     .typeError("Please enter a valid number.")
     .required("Plase enter price Wifi."),
   city: yup.object().required("Please choose a city"),
@@ -76,22 +78,83 @@ const schema = yup.object().shape({
 });
 
 const FormAddRoom = ({ handleComplete, activeStep }) => {
-  const { isCreate } = useSelector((state) => state.roomReducers);
+  const { isCreate, isUpdate } = useSelector((state) => state.roomReducers);
   const dispatch = useDispatch();
-  const {
-    handleSubmit,
-    control,
-    watch,
-    formState: { isSubmitting },
-  } = useForm({
+  const location = useLocation();
+  const idRoom = location?.state?.idRoom;
+  const { handleSubmit, control, watch, reset } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
   useEffect(() => {
-    if (isCreate) {
+    if (isCreate || isUpdate) {
       handleComplete();
     }
-  }, [isCreate]);
+    // eslint-disable-next-line
+  }, [isCreate, isUpdate]);
+
+  useEffect(() => {
+    if (idRoom) {
+      const getDetailRoom = async () => {
+        const res = await getDetailRoomApi(idRoom);
+        if (res.data) {
+          const {
+            createdAt,
+            ordered,
+            owner,
+            updatedAt,
+            userOrder,
+            verify,
+            _id,
+            ...value
+          } = res.data;
+          dispatch(roomActions.inforFormTemporary({ ...value }));
+          reset({
+            typeRoom: +res.data.typeRoom + "",
+            quantityRoom: res.data.quantityRoom,
+            capacity: res.data.capacity,
+            gender: +res.data.gender,
+            stretch: res.data.stretch,
+            priceRoom: res.data.priceRoom,
+            priceDeposit: res.data.priceDeposit + "",
+            priceElectric: res.data.priceElectric,
+            priceWater: res.data.priceWater,
+            priceWifi: res.data.priceWifi + "",
+            city: res.data.city,
+            district: res.data.district,
+            ward: res.data.ward,
+            nameStress: res.data.nameStress,
+            numberHome: res.data.numberHome,
+            images: res.data.images,
+            utilities: res.data.utilities,
+            description: res.data.description,
+          });
+        }
+      };
+      return getDetailRoom();
+    } else {
+      reset({
+        typeRoom: "",
+        quantityRoom: "",
+        capacity: "",
+        gender: "",
+        stretch: "",
+        priceRoom: "",
+        priceDeposit: "",
+        priceElectric: "",
+        priceWater: "",
+        priceWifi: "",
+        city: null,
+        district: null,
+        ward: null,
+        nameStress: "",
+        numberHome: "",
+        images: null,
+        utilities: null,
+        description: "",
+      });
+    }
+  }, [idRoom, reset, dispatch]);
 
   const handleCompleteSuccess = () => {
     handleComplete();
@@ -137,11 +200,10 @@ const FormAddRoom = ({ handleComplete, activeStep }) => {
   }, [district]);
 
   const handleSubmitForm = async (data) => {
-    console.log(data);
     const sendForm = {
       nameStress: data?.nameStress,
       numberHome: data?.numberHome,
-      priceRoom: +data?.numberHome,
+      priceRoom: +data?.priceRoom,
       priceDeposit: +data?.priceDeposit,
       typeRoom: +data?.typeRoom,
       stretch: +data?.stretch,
@@ -160,8 +222,11 @@ const FormAddRoom = ({ handleComplete, activeStep }) => {
       district: data?.district,
       city: data?.city,
     };
-    dispatch(roomActions.createRoom(sendForm));
-    // handleCompleteSuccess();
+    if (!idRoom) {
+      dispatch(roomActions.createRoom(sendForm));
+    } else {
+      dispatch(roomActions.updateRoom({ id: idRoom, data: sendForm }));
+    }
   };
 
   const showContent = (option) => {

@@ -1,33 +1,8 @@
-import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
-import {
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import ImageBanner from "images/bgHome.jpg";
 import styled from "styled-components";
 import { themes } from "themes";
 
-const useStyles = makeStyles(() => ({
-  styleInput: {
-    "& input": {
-      color: "white",
-      fontSize: "20px!important",
-    },
-    "&::before": {
-      borderBottomColor: "white !important",
-    },
-  },
-  label: { color: "white !important" },
-}));
-
 const Banner = () => {
-  const styles = useStyles();
-  const handleClick = () => {};
   return (
     <Wrapper>
       <Overlay></Overlay>
@@ -35,34 +10,6 @@ const Banner = () => {
         <Content>
           <Title>My Home</Title>
           <Description>Ứng dụng tìm kiếm phòng trọ miễn phí</Description>
-          <WrapSearch>
-            <FormControl color="white" variant="standard">
-              <InputLabel
-                className={styles.label}
-                color="white"
-                htmlFor="standard-adornment-password"
-              >
-                Tìm kiếm...
-              </InputLabel>
-              <Input
-                className={styles.styleInput}
-                color="white"
-                id="standard-adornment-password"
-                type="text"
-                //onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClick}
-                    >
-                      <SearchIcon color="white" />
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </WrapSearch>
         </Content>
       </WrapContent>
     </Wrapper>
@@ -82,7 +29,6 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
 `;
-const WrapSearch = styled.div``;
 const Description = styled.p`
   font-size: 20px;
   margin-bottom: 24px;

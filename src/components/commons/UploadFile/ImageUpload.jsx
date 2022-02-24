@@ -99,18 +99,20 @@ const WrapIconClose = styled.div`
 `;
 const Image = styled.img`
   object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 `;
 const WrapImage = styled.div`
   position: relative;
-  height: 120px;
-  width: 120px;
+  height: 100%;
+  width: 100%;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   border: 1px solid ${color.primary.Shades6};
   transition: all 0.2s ease-in-out;
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.3);
     .wrap-icon {
       visibility: visible;
       opacity: 1;

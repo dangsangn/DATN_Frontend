@@ -22,10 +22,9 @@ const options = [
   { label: "Tự do", icon: <AccessibilityNewIcon />, checked: false },
   { label: "Chổ phơi đồ", icon: <DryCleaningIcon />, checked: false },
 ];
-const Checkbboxexpend = ({ name, control }) => {
+const Checkbboxexpend = ({ name, control, title, ...responsive }) => {
   const [listUtilities, setListUtilities] = useState(() => options);
   const roomRenderers = useSelector((state) => state.roomReducers);
-
   const {
     field: { onChange, value },
     fieldState: { invalid, error },
@@ -66,10 +65,10 @@ const Checkbboxexpend = ({ name, control }) => {
   };
   return (
     <Wrapper>
-      <Title>Tiện ích</Title>
+      {title && <Title>{title}</Title>}
       <Grid container spacing={2}>
         {listUtilities.map((item, index) => (
-          <Grid key={index} item md={6}>
+          <Grid key={index} item {...responsive}>
             <WrapItem>
               <Input
                 name={name}

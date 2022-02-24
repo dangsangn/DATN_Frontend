@@ -1,14 +1,13 @@
-import Radio from "@mui/material/Radio";
 import {
   FormControl,
   FormControlLabel,
-  FormLabel,
+  FormHelperText,
   RadioGroup,
 } from "@mui/material";
-import styled from "styled-components";
+import Radio from "@mui/material/Radio";
 import React from "react";
 import { useController } from "react-hook-form";
-import { FormHelperText } from "@mui/material";
+import styled from "styled-components";
 
 export const RadioField = ({
   name,
@@ -22,15 +21,16 @@ export const RadioField = ({
     field: { onChange, value },
     fieldState: { invalid, error },
   } = useController({ name, control });
+
   return (
     <FormControl disabled={disabled} error={invalid} component="fieldset">
-      <Label>{label}</Label>
+      {label && <Label>{label}</Label>}
       <RadioGroup
         aria-label={name}
-        defaultValue={value}
+        defaultValue={+value}
         name={name}
         onChange={onChange}
-        value={value}
+        value={+value}
       >
         {options.map((item) => (
           <FormControlLabel

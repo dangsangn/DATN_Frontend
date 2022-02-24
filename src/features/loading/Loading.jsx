@@ -96,6 +96,7 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.4s ease;
 `;
 const WrapIconLoading = styled.div`
   width: 250px;
@@ -106,6 +107,6 @@ const Wrapper = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 10000000;
 `;
 export default Loading;

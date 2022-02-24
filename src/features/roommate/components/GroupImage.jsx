@@ -40,7 +40,7 @@ const GroupImage = ({ images }) => {
               style={{ height: "508px" }}
               onClick={() => openImgsViewer(0)}
             >
-              <Image src={images?.length > 1 && images[0]?.src} />
+              <Image src={images?.length > 1 ? images[0]?.src : ""} />
             </WrapImage>
           </Grid>
           <Grid item md={3}>
@@ -48,7 +48,7 @@ const GroupImage = ({ images }) => {
               <Grid item>
                 {lengthImages > 1 && (
                   <WrapImage onClick={() => openImgsViewer(1)}>
-                    <Image src={images?.length > 2 && images[1]?.src} />
+                    <Image src={images?.length > 2 ? images[1]?.src : ""} />
                   </WrapImage>
                 )}
               </Grid>

@@ -7,6 +7,7 @@ export const InputField = ({
   control,
   label,
   placeholder,
+  disabled,
   ...inputProps
 }) => {
   const {
@@ -29,6 +30,7 @@ export const InputField = ({
         placeholder={placeholder}
         helperText={error?.message}
         inputProps={inputProps}
+        disabled={disabled}
       />
     </WrapField>
   );

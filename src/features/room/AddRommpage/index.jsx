@@ -1,11 +1,15 @@
+import { Button } from "@mui/material";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
 import React from "react";
-import { color } from "themes";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import FormInfoRoom from "../components/FormInfoRoom";
-import FormAddress from "../components/FormAddress";
+import { color } from "themes";
+import history from "utils/history";
+import { roomActions } from "../roomSlice";
 import FormAddRoom from "./FormAddRoom";
 
 const steps = ["Thông tin", "Địa chỉ", "Tiện ích", "Xác nhận"];
@@ -13,9 +17,18 @@ const steps = ["Thông tin", "Địa chỉ", "Tiện ích", "Xác nhận"];
 export default function Features() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const idRoom = location?.state?.idRoom;
+  const token = localStorage.getItem("access_token");
+  if (!token) return <Redirect to="/login" />;
 
   const totalSteps = () => {
     return steps.length;
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
   };
 
   const completedSteps = () => {
@@ -40,10 +53,6 @@ export default function Features() {
     setActiveStep(newActiveStep);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
@@ -56,8 +65,6 @@ export default function Features() {
     setCompleted(newCompleted);
     handleNext();
   };
-
-  const handleGetStarted = () => {};
 
   const showSteps = (steps, mobile) => {
     return (
@@ -81,9 +88,30 @@ export default function Features() {
     );
   };
 
+  const handleStartCreateRoom = () => {
+    history.push("/post-room");
+    handleReset();
+    dispatch(roomActions.clearForm());
+  };
+
   return (
     <Wrapper>
-      <Title>Đăng phòng</Title>
+      <Title>
+        {idRoom ? (
+          <>
+            <span>Thay đổi thông tin</span>
+            <Button
+              variant="outlined"
+              sx={{ textTransform: "initial !important", marginLeft: "16px" }}
+              onClick={handleStartCreateRoom}
+            >
+              Tạo phòng
+            </Button>
+          </>
+        ) : (
+          "Đăng phòng"
+        )}
+      </Title>
       <WrapperStep>{showSteps(steps, false)}</WrapperStep>
       <WrapStepMobile>
         <LableStep>
@@ -92,7 +120,11 @@ export default function Features() {
         {showSteps(steps, true)}
       </WrapStepMobile>
       <WrapContent>
-        <FormAddRoom handleComplete={handleComplete} activeStep={activeStep} />
+        <FormAddRoom
+          handleReset={handleReset}
+          handleComplete={handleComplete}
+          activeStep={activeStep}
+        />
       </WrapContent>
     </Wrapper>
   );

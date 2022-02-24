@@ -34,8 +34,8 @@ const Utilities = ({ utilities }) => {
         <Title>Tiện ích</Title>
       </WrapTitle>
       <WrapContent>
-        {filterData.map((item) => (
-          <Item>
+        {filterData.map((item, index) => (
+          <Item key={index}>
             <Icon>{item.icon}</Icon>
             <Text>{item.label}</Text>
           </Item>
