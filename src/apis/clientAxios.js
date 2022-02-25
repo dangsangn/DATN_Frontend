@@ -32,7 +32,6 @@ function authHeaders() {
     Authorization: "Bearer " + token,
     Accept: "application/json",
     "Accept-Language": "vi",
-    "Access-Control-Allow-Credentials": true,
   };
   return headers;
 }

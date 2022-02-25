@@ -15,6 +15,7 @@ const Logingoogle = () => {
     password: "",
   });
   const responseGoogle = async (response) => {
+    console.log("response", response);
     setData({
       username: response?.profileObj?.name,
       email: response?.profileObj?.email,
@@ -30,13 +31,13 @@ const Logingoogle = () => {
         if (res.data) {
           dispatch(
             loginActions.login({
-              username: data.username,
+              username: data.email,
               password: data.password,
             })
           );
         } else {
           const res = await register({
-            username: data.username,
+            username: data.email,
             password: data.password,
             passwordConfirm: data.password,
             email: data.email,
@@ -44,7 +45,7 @@ const Logingoogle = () => {
           if (res.status === 202) {
             dispatch(
               loginActions.login({
-                username: data.username,
+                username: data.email,
                 password: data.password,
               })
             );
@@ -67,11 +68,14 @@ const Logingoogle = () => {
             <GoogleIcon />
             <MediaText>Google</MediaText>
           </MediaContent>
+          // <button onClick={renderProps.onClick} disabled={renderProps.disabled}>
+          //   This is my custom Google button
+          // </button>
         )}
-        buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         cookiePolicy={"single_host_origin"}
+        // isSignedIn={true}
       />
     </div>
   );
@@ -80,8 +84,9 @@ const Logingoogle = () => {
 const MediaText = styled.p`
   margin-left: 8px;
 `;
-const MediaContent = styled.div`
+const MediaContent = styled.button`
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
