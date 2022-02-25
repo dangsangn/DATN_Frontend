@@ -224,7 +224,8 @@ export default function UserList() {
                       <TableCell align="left">{row?.username}</TableCell>
                       <TableCell align="left">{row?.email}</TableCell>
                       <TableCell align="left">
-                        {format(new Date(row?.createdAt), "dd/MM/yyyy")}
+                        {row?.createdAt &&
+                          format(new Date(row?.createdAt), "dd/MM/yyyy")}
                       </TableCell>
                       <TableCell align="right">
                         <Button

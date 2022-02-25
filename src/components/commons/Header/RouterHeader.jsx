@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { themes } from "themes";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const Routerheader = () => {
   const history = useHistory();
@@ -90,10 +91,12 @@ const Routerheader = () => {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={() => history.push("/profile")}>
-                <AccountCircleIcon /> <Text>Profile</Text>
+              <MenuItem onClick={() => history.push("/order")}>
+                <AddShoppingCartIcon /> <Text>Phòng đã đặt</Text>
               </MenuItem>
-
+              <MenuItem onClick={() => history.push("/profile")}>
+                <AccountCircleIcon /> <Text>Hồ sơ</Text>
+              </MenuItem>
               <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <Logout fontSize="small" />

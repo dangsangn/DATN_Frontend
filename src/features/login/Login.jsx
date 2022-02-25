@@ -4,20 +4,10 @@ import styled from "styled-components";
 import FormLogin from "./components/FormLogin";
 import bgLogin from "images/image5.jpg";
 import { themes } from "themes";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
+
 import { Link } from "react-router-dom";
+import Logingoogle from "./components/LoginGoogle";
 const Login = () => {
-  const google = () => {
-    localStorage.setItem("typeLogin", "social");
-    window.open("http://localhost:5000/api/auth/google", "_self");
-  };
-
-  const facebook = () => {
-    localStorage.setItem("typeLogin", "social");
-    window.open("http://localhost:5000/api/auth/facebook", "_self");
-  };
-
   return (
     <Wrapper>
       <Grid container>
@@ -39,17 +29,8 @@ const Login = () => {
             </Separate>
             <WrapMedia>
               <Grid container spacing={2}>
-                <Grid item md={6}>
-                  <MediaContent onClick={google}>
-                    <GoogleIcon />
-                    <MediaText>Google</MediaText>
-                  </MediaContent>
-                </Grid>
-                <Grid item md={6}>
-                  <MediaContent onClick={facebook}>
-                    <FacebookIcon />
-                    <MediaText>Facebook</MediaText>
-                  </MediaContent>
+                <Grid item md={12}>
+                  <Logingoogle />
                 </Grid>
               </Grid>
             </WrapMedia>
@@ -84,20 +65,7 @@ const WrapHelper = styled.div`
   justify-content: center;
   margin-top: 16px;
 `;
-const MediaText = styled.p`
-  margin-left: 8px;
-`;
-const MediaContent = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  cursor: pointer;
-  border: 1px solid ${themes.border};
-  &:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-`;
+
 const WrapMedia = styled.div``;
 const Line = styled.div`
   height: 0.5px;

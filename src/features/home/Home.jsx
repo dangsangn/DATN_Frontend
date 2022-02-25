@@ -50,7 +50,7 @@ const Home = () => {
                 </MButton>
               </TitleListRoom>
               {listRoom.map((item) => (
-                <RoomItem key={item._id} data={item} />
+                <RoomItem vertical={false} key={item._id} data={item} />
               ))}
               <WrapLinkFooter>
                 <LinkFooter to="/view-all-room">Xem tất cả </LinkFooter>

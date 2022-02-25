@@ -14,3 +14,8 @@ export const refuseOrderApi = (id) => {
   const url = "order/refuse/" + id;
   return authPatch(url);
 };
+
+export const getOrderOfUserApi = () => {
+  const url = "order";
+  return authGet(url);
+};

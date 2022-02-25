@@ -1,19 +1,22 @@
 import ChatIcon from "@mui/icons-material/Chat";
-import { Box, Button, Grid, TextField } from "@mui/material";
-import { getroomDetailApi } from "apis/room";
+import { Box, Button, Grid } from "@mui/material";
+import { getRoomsApi } from "apis/room";
+import MInputnumber from "components/commons/FormField/InputNumber";
+import { loadingActions } from "features/loading/loadingSlice";
 import Messenger from "features/messages/components/Messenger";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import history from "utils/history";
+import { messageActions } from "../messages/MessageSlice";
 import GroupImage from "./components/GroupImage";
 import InfomationHost from "./components/InfomationHost";
 import InfomationRoom from "./components/InfomationRoom";
 import Utilities from "./components/Utilities";
 import { roomDetailActions } from "./roomDetailSlice";
-import { messageActions } from "../messages/MessageSlice";
-import MInputnumber from "components/commons/FormField/InputNumber";
+import queryString from "query-string";
+import Listroomrecommend from "./components/ListRoomRecommend";
 
 const RoomateDetail = () => {
   const { id } = useParams();
@@ -22,14 +25,40 @@ const RoomateDetail = () => {
   const { user } = useSelector((state) => state.userReducers);
   const [openChatBox, setOpenChatBox] = useState(false);
   const [countRoom, setCountRoom] = useState(1);
+  const [listRoomRecommend, setListRoomRecommend] = useState([]);
   const [infoConversation, setInfoConversation] = useState({
     title: "", //name user chat
     isBox: true, //in detail room, it is a box
     height: 286,
   });
+
   useEffect(() => {
     dispatch(roomDetailActions.getDetailRoom(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    const getListRoomRecommed = async () => {
+      try {
+        if (roomDetail) {
+          const result = await getRoomsApi(
+            queryString.stringify({
+              price: [
+                roomDetail?.priceRoom / 1000000 - 1,
+                roomDetail?.priceRoom / 1000000 + 1,
+              ],
+              q: roomDetail?.district?.label,
+              _page: 1,
+              _limit: 10,
+            })
+          );
+          setListRoomRecommend(
+            result.data.rooms.filter((item) => item?._id !== roomDetail?._id)
+          );
+        }
+      } catch (error) {}
+    };
+    return getListRoomRecommed();
+  }, [roomDetail]);
 
   const handleToggleChatBox = () => {
     setOpenChatBox(!openChatBox);
@@ -40,22 +69,32 @@ const RoomateDetail = () => {
   };
 
   const handleGetConversation = async () => {
-    dispatch(
-      messageActions.getConversation({
-        idUser: user?._id,
-        idReceiver: roomDetail?.owner?._id,
-      })
-    );
-    handleToggleChatBox();
+    if (!user?._id) {
+      history.push("/login");
+      dispatch(loadingActions.setMessageSuccess("Vui lòng đăng nhập!"));
+    } else {
+      dispatch(
+        messageActions.getConversation({
+          idUser: user?._id,
+          idReceiver: roomDetail?.owner?._id,
+        })
+      );
+      handleToggleChatBox();
+    }
   };
 
   const handleOrderRoom = () => {
-    dispatch(
-      roomDetailActions.updateRoomOrder({
-        id: roomDetail?._id,
-        count: countRoom,
-      })
-    );
+    if (!user?._id) {
+      history.push("/login");
+      dispatch(loadingActions.setMessageSuccess("Vui lòng đăng nhập!"));
+    } else {
+      dispatch(
+        roomDetailActions.updateRoomOrder({
+          id: roomDetail?._id,
+          count: countRoom,
+        })
+      );
+    }
   };
   return (
     <Wrapper>
@@ -169,10 +208,18 @@ const RoomateDetail = () => {
           </WrapModalChat>
         )}
       </WrapActionButton>
+      {listRoomRecommend.length > 0 && (
+        <WrapListRecommend>
+          <Listroomrecommend listRoom={listRoomRecommend} />
+        </WrapListRecommend>
+      )}
     </Wrapper>
   );
 };
 
+const WrapListRecommend = styled.div`
+  margin-top: 32px;
+`;
 const SuccessTetx = styled.span`
   background-color: green;
   color: #fff;
@@ -217,12 +264,6 @@ const WrapModalChat = styled.div`
 const ChatButton = styled(Button)`
   text-transform: inherit !important;
   border-radius: 12px !important;
-`;
-const FavoriteButton = styled(Button)`
-  width: 44px;
-  height: 44px;
-  min-width: 44px !important;
-  border-radius: 50% !important;
 `;
 const WrapActionButton = styled.div`
   position: fixed;

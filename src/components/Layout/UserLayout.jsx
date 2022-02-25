@@ -2,12 +2,11 @@ import Footer from "components/commons/Footer";
 import Header from "components/commons/Header/Header";
 import Home from "features/home/Home";
 import Login from "features/login/Login";
-import Conversation from "features/messages/Conversation";
 import Mypost from "features/myPost/MyPost";
+import Order from "features/order/Order";
 import Register from "features/register/Register";
 import AddRoomPage from "features/room/AddRommpage";
 import RoomateDetail from "features/roommate/RoomateDetail";
-import Roommate from "features/roommate/Roommate";
 import Userprofile from "features/userProfile/UserProfile";
 import ViewAllRoom from "features/viewAllRoom/ViewAllRoom";
 import { Route, Switch } from "react-router-dom";
@@ -40,6 +39,9 @@ const UserLayout = () => {
           </Route>
           <Route path="/my-room">
             <Mypost />
+          </Route>
+          <Route path="/order">
+            <Order />
           </Route>
           <Route path="/">
             <Home />
