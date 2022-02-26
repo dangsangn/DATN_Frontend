@@ -12,7 +12,7 @@ const Conversation = () => {
   const [infoConversation, setInfoConversation] = useState({
     title: "", //name user chat
     isBox: false, //in detail room, it is a box
-    height: 400,
+    height: 272,
   });
   useEffect(() => {
     dispatch(messageActions.getListConversation());
