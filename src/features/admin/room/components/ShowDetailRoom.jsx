@@ -1,16 +1,15 @@
 import { Button } from "@mui/material";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { roomAdminActions } from "../roomAdminSlice";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import Imagelist from "components/ImageList/ImageList";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { roomAdminActions } from "../roomAdminSlice";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -79,23 +78,7 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
             <h4>
               <strong>Images:</strong>
             </h4>
-            <ImageList
-              sx={{ width: "100%", height: 450 }}
-              cols={3}
-              rowHeight={164}
-            >
-              {selectRoom?.images &&
-                selectRoom?.images.map((item) => (
-                  <ImageListItem key={item}>
-                    <img
-                      src={`${item}`}
-                      srcSet={`${item}`}
-                      alt={item}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-            </ImageList>
+            {selectRoom?.images && <Imagelist imageList={selectRoom?.images} />}
           </WrapImage>
           <p>
             <strong>Address:</strong> {selectRoom?.numberHome}

@@ -150,7 +150,6 @@ export default function RoomList() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const roomAdmin = useSelector((state) => state.roomAdminReducers);
-  const dispatch = useDispatch();
   const [idRoom, setIdRoom] = React.useState(null);
   const rows = covertData(roomAdmin?.listRoom);
 
@@ -221,14 +220,16 @@ export default function RoomList() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Box sx={{ position: "relative" }}>
-            <Showdetailroom idRoom={idRoom} handleClose={handleClose} />
-            <WrapButtonClose onClick={handleClose}>
-              <CloseIcon />
-            </WrapButtonClose>
+        <WrapperModal>
+          <Box sx={{ height: "90vh", maxHeight: "90vh", overflowY: "scroll" }}>
+            <Box sx={{ position: "relative" }}>
+              <Showdetailroom idRoom={idRoom} handleClose={handleClose} />
+              <WrapButtonClose onClick={handleClose}>
+                <CloseIcon />
+              </WrapButtonClose>
+            </Box>
           </Box>
-        </Box>
+        </WrapperModal>
       </Modal>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
@@ -309,7 +310,18 @@ export default function RoomList() {
     </Box>
   );
 }
-
+const WrapperModal = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  background-color: #fff;
+  box-shadow: 24;
+  border-radius: 8px;
+  padding: 24px;
+  padding-right: 16px;
+`;
 const WrapButtonClose = styled.div`
   position: absolute;
   top: 0px;

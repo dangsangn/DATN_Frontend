@@ -212,10 +212,7 @@ export default function RoomList() {
         aria-describedby="modal-modal-description"
       >
         <WrapperModal>
-          <Box
-            id="containermodel"
-            sx={{ height: "90vh", maxHeight: "90vh", overflowY: "scroll" }}
-          >
+          <Box sx={{ height: "90vh", maxHeight: "90vh", overflowY: "scroll" }}>
             <Box sx={{ position: "relative" }}>
               <Detailroom idRoom={idRoom} handleClose={handleClose} />
               <WrapButtonClose onClick={handleClose}>
