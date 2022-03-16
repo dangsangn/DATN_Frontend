@@ -66,3 +66,19 @@ input[type='number'] {
 ::-webkit-scrollbar-thumb:hover {
   background: #666;
 }
+
+.text-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-clamp--1 {
+  -webkit-line-clamp: 1;
+}
+.text-clamp--2 {
+  -webkit-line-clamp: 2;
+}
+.text-clamp--5 {
+  -webkit-line-clamp: 5;
+}

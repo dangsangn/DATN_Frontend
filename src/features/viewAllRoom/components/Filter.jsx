@@ -21,26 +21,26 @@ const genders = [
   },
 ];
 
-const Filter = ({ control }) => {
+const Filter = ({clear, control }) => {
   return (
     <Wrapper>
       <WrapPrice>
-        <Collapsible title="Giá">
+        <Collapsible clear={clear} title="Giá">
           <WrapCollapsible>
             <RangeSlider control={control} name="price" />
           </WrapCollapsible>
         </Collapsible>
-        <Collapsible title="Tiện ích">
+        <Collapsible clear={clear} title="Tiện ích">
           <WrapCollapsible>
             <Listutil control={control} />
           </WrapCollapsible>
         </Collapsible>
-        <Collapsible title="Loại phòng">
+        <Collapsible clear={clear} title="Loại phòng">
           <WrapCollapsible>
             <Typeroom control={control} />
           </WrapCollapsible>
         </Collapsible>
-        <Collapsible title="Giới tính">
+        <Collapsible clear={clear} title="Giới tính">
           <WrapCollapsible>
             <RadioField name="gender" options={genders} control={control} />
           </WrapCollapsible>

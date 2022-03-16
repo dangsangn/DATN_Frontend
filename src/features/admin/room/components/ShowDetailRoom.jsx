@@ -6,6 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import Imagelist from "components/ImageList/ImageList";
+import { notificationActions } from "features/notification/notificationSlice";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -19,7 +20,7 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
   const { selectRoom } = useSelector((state) => state.roomAdminReducers);
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = React.useState(false);
-
+  const { user } = useSelector((state) => state.userReducers);
   const handleClickOpenDialog = () => {
     setOpenDialog(true);
   };
@@ -39,6 +40,25 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
         verify: !selectRoom?.verify,
       })
     );
+    if (selectRoom?.verify) {
+      dispatch(
+        notificationActions.createNotification({
+          sender: user?._id,
+          receiver: selectRoom?.owner._id,
+          type: 5,
+          content: selectRoom?._id,
+        })
+      );
+    } else {
+      dispatch(
+        notificationActions.createNotification({
+          sender: user?._id,
+          receiver: selectRoom?.owner._id,
+          type: 4,
+          content: selectRoom?._id,
+        })
+      );
+    }
     handleClose();
   };
 
@@ -46,6 +66,7 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
     dispatch(roomAdminActions.deleteRoom(idRoom));
     handleClose();
   };
+  console.log("selecroom", selectRoom);
   return (
     <>
       <Dialog
@@ -70,23 +91,27 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
       </Dialog>
       <Wrapper>
         <Title>
-          <strong>Room Detail:</strong>
+          <strong>Chi tiết phòng:</strong>
         </Title>
         <CodeId># {selectRoom?._id}</CodeId>
         <WrapBody>
           <WrapImage>
             <h4>
-              <strong>Images:</strong>
+              <strong>Hình ảnh:</strong>
             </h4>
             {selectRoom?.images && <Imagelist imageList={selectRoom?.images} />}
           </WrapImage>
           <p>
-            <strong>Address:</strong> {selectRoom?.numberHome}
+            <strong>Địa chỉ:</strong> {selectRoom?.numberHome}
             {selectRoom?.nameStress}, {selectRoom?.ward?.label}
             {selectRoom?.district?.label} {selectRoom?.city?.label}
           </p>
           <p>
-            <strong>Price room:</strong> {selectRoom?.priceRoom} vnd
+            <strong>Gía phòng:</strong> {selectRoom?.priceRoom} vnd
+          </p>
+          <p>
+            <strong>Chủ phòng:</strong>
+            {selectRoom?.owner?.username}
           </p>
           <WrapAction>
             <Button
@@ -95,7 +120,7 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
               color="error"
               onClick={handleClickOpenDialog}
             >
-              Delete
+              Xóa
             </Button>
             <Button variant="contained" onClick={handleVerifyRoom}>
               {selectRoom?.verify ? "Unverify" : "Verify"}

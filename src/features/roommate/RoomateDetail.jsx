@@ -17,6 +17,7 @@ import Utilities from "./components/Utilities";
 import { roomDetailActions } from "./roomDetailSlice";
 import queryString from "query-string";
 import Listroomrecommend from "./components/ListRoomRecommend";
+import { notificationActions } from "features/notification/notificationSlice";
 
 const RoomateDetail = () => {
   const { id } = useParams();
@@ -92,6 +93,14 @@ const RoomateDetail = () => {
         roomDetailActions.updateRoomOrder({
           id: roomDetail?._id,
           count: countRoom,
+        })
+      );
+      dispatch(
+        notificationActions.createNotification({
+          sender: user?._id,
+          receiver: roomDetail?.owner._id,
+          type: 1,
+          content: roomDetail?._id,
         })
       );
     }
@@ -193,7 +202,11 @@ const RoomateDetail = () => {
           <FavoriteIcon />
         </FavoriteButton> */}
         {user?._id !== roomDetail?.owner?._id && (
-          <ChatButton variant="contained" onClick={handleGetConversation}>
+          <ChatButton
+            sx={{ position: "relative", zIndex: 1000 }}
+            variant="contained"
+            onClick={handleGetConversation}
+          >
             <ChatIcon sx={{ marginRight: "12px" }} />
             Nhắn với chủ phòng
           </ChatButton>
@@ -270,6 +283,7 @@ const WrapActionButton = styled.div`
   left: 50%;
   transform: translateX(-50%);
   bottom: 24px;
+  z-index: 1000;
 `;
 const WrapInfomationHost = styled.div`
   border-radius: 32px;

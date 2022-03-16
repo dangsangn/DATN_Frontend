@@ -9,12 +9,12 @@ const Register = () => {
   return (
     <Wrapper>
       <Grid container>
-        <Grid item md={7}>
+        <Grid item md={7} sm={5} xs={12}>
           <WrapImage>
             <img src={bgLogin} alt="" />
           </WrapImage>
         </Grid>
-        <Grid item md={5}>
+        <Grid item md={5} sm={7} xs={12}>
           <WrapLogin>
             <WrapTitle>
               <Title>My home</Title>

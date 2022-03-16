@@ -7,6 +7,7 @@ import Room from "features/admin/room/Room";
 import { HeaderAdmin } from "components/commons/HeaderAdmin/HeaderAmin";
 import { SidebarAdmin } from "components/commons/SidebarAdmin/SidebarAdmin";
 import AccountAdmin from "features/admin/account/AccountAdmin";
+import Dashboard from "features/admin/dashboard/Dashboard";
 
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   display: "flex",
@@ -33,6 +34,9 @@ export const AdminLayout = () => {
           }}
         >
           <Switch>
+            <Route path="/admin/dashboard">
+              <Dashboard />
+            </Route>
             <Route path="/admin/users">
               <User />
             </Route>

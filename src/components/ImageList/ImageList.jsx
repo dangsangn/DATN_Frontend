@@ -6,7 +6,7 @@ const Imagelist = ({ imageList }) => {
   return (
     <Grid container spacing={2}>
       {imageList.map((item, index) => (
-        <Grid key={index} item md={3} xs={12}>
+        <Grid key={index} item md={3} sm={6} xs={12}>
           <WrapImage>
             <Image src={item} alt={item} />
           </WrapImage>

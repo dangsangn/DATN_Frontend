@@ -3,6 +3,7 @@ import styled from "styled-components";
 import HomeIcon from "@mui/icons-material/Home";
 import { themes } from "themes";
 import { Grid } from "@mui/material";
+import { moneyFormat } from "utils/moneyFormat";
 const InfomationRoom = ({
   priceRoom,
   stretch,
@@ -32,7 +33,9 @@ const InfomationRoom = ({
           <Grid item>
             <ContentItem>
               <TitleContent>GIÁ PHÒNG</TitleContent>
-              <DescriptionContent>{priceRoom} đồng</DescriptionContent>
+              <DescriptionContent>
+                {moneyFormat(priceRoom)} đồng
+              </DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
@@ -44,7 +47,9 @@ const InfomationRoom = ({
           <Grid item>
             <ContentItem>
               <TitleContent>ĐẶT CỌC</TitleContent>
-              <DescriptionContent>{priceDeposit} đồng</DescriptionContent>
+              <DescriptionContent>
+                {moneyFormat(priceDeposit)} đồng
+              </DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
@@ -56,19 +61,25 @@ const InfomationRoom = ({
           <Grid item>
             <ContentItem>
               <TitleContent>ĐIỆN</TitleContent>
-              <DescriptionContent>{priceElectric} đồng</DescriptionContent>
+              <DescriptionContent>
+                {moneyFormat(priceElectric)} đồng
+              </DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
             <ContentItem>
               <TitleContent>NƯỚC</TitleContent>
-              <DescriptionContent>{priceWater} đồng</DescriptionContent>
+              <DescriptionContent>
+                {moneyFormat(priceWater)} đồng
+              </DescriptionContent>
             </ContentItem>
           </Grid>
           <Grid item>
             <ContentItem>
               <TitleContent>WIFI</TitleContent>
-              <DescriptionContent>{priceWifi} đồng</DescriptionContent>
+              <DescriptionContent>
+                {moneyFormat(priceWifi)} đồng
+              </DescriptionContent>
             </ContentItem>
           </Grid>
         </Grid>

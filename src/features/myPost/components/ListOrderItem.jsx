@@ -4,12 +4,14 @@ import { confirmOrderApi, getDetailOrderApi } from "features/order/api";
 import React, { useEffect, useState } from "react";
 import { loadingActions } from "features/loading/loadingSlice";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "features/order/orderSlice";
+import { notificationActions } from "features/notification/notificationSlice";
 
 const Listorderitem = ({ idOrder }) => {
   const row = {};
   const [detailOrder, setDetailOrder] = useState();
+  const { user } = useSelector((state) => state.userReducers);
   const dispatch = useDispatch();
   useEffect(() => {
     const getDetailOrder = async () => {
@@ -30,6 +32,14 @@ const Listorderitem = ({ idOrder }) => {
       if (res.data) {
         setDetailOrder(res.data);
         dispatch(loadingActions.setMessageSuccess("Xác nhận thành công!"));
+        dispatch(
+          notificationActions.createNotification({
+            sender: user?._id,
+            receiver: res.data.user?._id,
+            type: 2,
+            content: res.data._id,
+          })
+        );
       }
     } catch (error) {
       console.log(error);
@@ -38,6 +48,14 @@ const Listorderitem = ({ idOrder }) => {
   };
   const handleRefuseOrder = () => {
     dispatch(orderActions.refuseOrder(idOrder));
+    dispatch(
+      notificationActions.createNotification({
+        sender: user?._id,
+        receiver: detailOrder.user?._id,
+        type: 2,
+        content: detailOrder._id,
+      })
+    );
   };
 
   return (

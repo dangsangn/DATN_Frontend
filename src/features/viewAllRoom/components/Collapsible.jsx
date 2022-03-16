@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-const Collapsible = ({ title, children }) => {
+const Collapsible = ({ clear, title, children }) => {
   const [open, setOpen] = useState(false);
   const handleToggle = () => {
     setOpen(!open);
   };
+  useEffect(() => {
+    if (clear) {
+      setOpen(false);
+    }
+  }, [clear]);
   return (
     <Wrapper>
       <Header onClick={handleToggle}>

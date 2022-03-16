@@ -15,7 +15,7 @@ function* handleLogin({ payload }) {
       yield put(userActions.getProfile());
       yield put(loadingActions.setMessageSuccess("Login success"));
       if (user.isAdmin) {
-        history.push("/admin/rooms");
+        history.push("/admin/dashboard");
       } else {
         history.push("/");
       }

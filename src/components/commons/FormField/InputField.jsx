@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import React from "react";
 import { useController } from "react-hook-form";
 import styled from "styled-components";
+import { moneyFormat } from "utils/moneyFormat";
 export const InputField = ({
   name,
   control,

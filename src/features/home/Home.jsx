@@ -10,6 +10,7 @@ import { roomActions } from "features/room/roomSlice";
 import { Link } from "react-router-dom";
 import { themes } from "themes";
 import history from "utils/history";
+import Listdistrict from "./components/ListDistrict";
 const Home = () => {
   const { listRoom, listRoomVerified } = useSelector(
     (state) => state.roomReducers
@@ -36,6 +37,10 @@ const Home = () => {
         <Banner />
       </WrapBanner>
       <WrapContent>
+        <WrapDistrict>
+          <TitleDistrict>Quận đang có nhiều trọ</TitleDistrict>
+          <Listdistrict />
+        </WrapDistrict>
         <Grid container spacing={2}>
           <Grid item md={8}>
             <ListRoomContent>
@@ -90,6 +95,12 @@ const Home = () => {
   );
 };
 
+const TitleDistrict = styled.h3`
+  margin-bottom: 12px;
+`;
+const WrapDistrict = styled.div`
+  margin-bottom: 48px;
+`;
 const WrapLinkFooter = styled.div`
   text-align: center;
 `;
@@ -121,11 +132,17 @@ const ListRoomContent = styled.div`
     border-bottom: none;
     margin-bottom: 0;
   }
+  @media (max-width: 600px) {
+    padding: 32px 20px;
+  }
 `;
 const WrapContent = styled.div`
   padding: 50px 32px;
   max-width: 1440px;
   margin: auto;
+  @media (max-width: 600px) {
+    padding: 40px 20px;
+  }
 `;
 const WrapBanner = styled.div``;
 const Wrapper = styled.div``;

@@ -15,9 +15,7 @@ const Infoaccount = () => {
           <WrapInfo>
             <Avatar
               alt="Remy Sharp"
-              src={
-                "https://material-kit-react.devias.io/static/images/avatars/avatar_6.png"
-              }
+              src={""}
               sx={{ width: 64, height: 64, marginBottom: "16px" }}
             />
             <Username>{user?.username}</Username>

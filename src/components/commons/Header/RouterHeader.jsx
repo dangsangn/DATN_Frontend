@@ -1,26 +1,51 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AddBusinessIcon from "@mui/icons-material/AddBusiness";
-import Logout from "@mui/icons-material/Logout";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import FeaturedPlayListOutlinedIcon from "@mui/icons-material/FeaturedPlayListOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import NoteAltOutlinedIcon from "@mui/icons-material/NoteAltOutlined";
 import Button from "@mui/material/Button";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Box } from "@mui/system";
 import { loginActions } from "features/login/loginSlice";
-import React from "react";
+import { notificationActions } from "features/notification/notificationSlice";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { themes } from "themes";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+const menus = [
+  {
+    link: "/my-room",
+    icon: <FeaturedPlayListOutlinedIcon />,
+    title: "Bài đăng",
+  },
+  {
+    link: "/conversation",
+    icon: <ChatBubbleOutlineOutlinedIcon />,
+    title: "Hộp thoại",
+  },
+  {
+    link: "/order",
+    icon: <AddShoppingCartIcon />,
+    title: "Phòng đã đặt",
+  },
+  {
+    link: "/profile",
+    icon: <NoteAltOutlinedIcon />,
+    title: "Hồ sơ",
+  },
+];
 
 const Routerheader = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducers);
+  const location = useLocation();
   // console.log("user", user);
   const [anchorEl, setAnchorEl] = React.useState();
   const open = Boolean(anchorEl);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -31,23 +56,15 @@ const Routerheader = () => {
   const handleLogout = () => {
     dispatch(loginActions.logout());
   };
+
   return (
+    // <>
     <ListMenu>
       {user?.username ? (
         <>
           <ItemMenu key="postRoom">
             <LinkMenu classnameactive="active" to="/post-room">
-              <AddBusinessIcon /> <span>Đăng phòng</span>
-            </LinkMenu>
-          </ItemMenu>
-          <ItemMenu key="myRoom">
-            <LinkMenu classnameactive="active" to="/my-room">
-              Bài đăng
-            </LinkMenu>
-          </ItemMenu>
-          <ItemMenu key="conversation">
-            <LinkMenu classnameactive="active" to="/conversation">
-              Hộp thoại
+              Đăng phòng
             </LinkMenu>
           </ItemMenu>
           <ItemMenu>
@@ -62,6 +79,7 @@ const Routerheader = () => {
               open={open}
               onClose={handleClose}
               onClick={handleClose}
+              variant="selectedMenu"
               PaperProps={{
                 elevation: 0,
                 sx: {
@@ -91,17 +109,25 @@ const Routerheader = () => {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <MenuItem onClick={() => history.push("/order")}>
-                <AddShoppingCartIcon /> <Text>Phòng đã đặt</Text>
-              </MenuItem>
-              <MenuItem onClick={() => history.push("/profile")}>
-                <AccountCircleIcon /> <Text>Hồ sơ</Text>
-              </MenuItem>
+              {menus.map((item, index) => (
+                <MenuItem
+                  style={
+                    location.pathname === item.link
+                      ? {
+                          backgroundColor: themes.primary,
+                          color: themes.white,
+                        }
+                      : {}
+                  }
+                  key={index}
+                  onClick={() => history.push(item.link)}
+                >
+                  {item.icon} <Text>{item.title}</Text>
+                </MenuItem>
+              ))}
               <MenuItem onClick={handleLogout}>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Đăng xuất
+                <LogoutOutlinedIcon />
+                <Text>Đăng xuất</Text>
               </MenuItem>
             </Menu>
           </ItemMenu>
@@ -121,9 +147,13 @@ const Routerheader = () => {
         </>
       )}
     </ListMenu>
+    // </>
   );
 };
 
+const WrapperNotification = styled.div`
+  padding: 24px 0;
+`;
 const MButton = styled(Button)`
   text-transform: initial !important;
   border-radius: 16px !important;

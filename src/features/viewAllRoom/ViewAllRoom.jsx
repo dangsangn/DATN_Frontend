@@ -1,4 +1,4 @@
-import { Button, Grid, Pagination, Stack } from "@mui/material";
+import { Button, Grid, IconButton, Pagination, Stack } from "@mui/material";
 import RoomItem from "features/room/components/RoomItem";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,11 +11,12 @@ import { roomActions } from "features/room/roomSlice";
 import ImageNoData from "images/nodata.jpg";
 import history from "utils/history";
 import { useLocation } from "react-router-dom";
+import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 export default function ViewAllRoom() {
   const dispatch = useDispatch();
   const match = useLocation();
   const { listRoom, totalRow } = useSelector((state) => state.roomReducers);
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       price: [],
@@ -32,6 +33,7 @@ export default function ViewAllRoom() {
     _page: 1,
     _limit: 10,
   });
+  const [clear, setClear] = useState(false);
   useEffect(() => {
     const queryUrl = queryString.parse(match.search);
     if (queryUrl.verify === "true") {
@@ -49,8 +51,23 @@ export default function ViewAllRoom() {
 
   const handleApplyFilter = (value) => {
     setFilter({ ...filter, ...value });
+    setClear(false);
     const queryUrl = queryString.stringify({ ...filter, ...value });
     history.push("/view-all-room?" + queryUrl);
+  };
+
+  const handleClear = () => {
+    history.push("/view-all-room");
+    setFilter({
+      price: [],
+      utilities: [],
+      gender: "",
+      typeRoom: "",
+      _page: 1,
+      _limit: 10,
+    });
+    setClear(true);
+    reset();
   };
 
   return (
@@ -66,7 +83,7 @@ export default function ViewAllRoom() {
                 </MButton>
               </WrapTitleFilter>
               <WrapFilterContent>
-                <Filter control={control} />
+                <Filter clear={clear} control={control} />
               </WrapFilterContent>
               <WrapFooterFilter>
                 <MButton type="submit" color="primary" variant="text">
@@ -82,6 +99,9 @@ export default function ViewAllRoom() {
               <TitleFilter>
                 {filter?.verify ? "Phòng đã được xác thực" : "Phòng mới nhất"}
               </TitleFilter>
+              <IconButton color="error" onClick={handleClear}>
+                <CleaningServicesIcon />
+              </IconButton>
             </WrapTitleFilter>
             <WrapBody>
               {listRoom.length === 0 ? (
@@ -137,6 +157,7 @@ const MButton = styled(Button)`
   border-radius: 16px !important;
   border-width: 2px !important;
   text-transform: initial !important;
+  font-weight: bold !important;
 `;
 const WrapFilterContent = styled.div`
   padding: 32px;
@@ -145,6 +166,7 @@ const WrapFilterContent = styled.div`
 const TitleFilter = styled.h3`
   font-size: 24px;
   font-weight: bold;
+  cursor: pointer;
 `;
 const WrapTitleFilter = styled.div`
   background-color: #fff;

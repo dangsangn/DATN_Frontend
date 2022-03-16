@@ -22,6 +22,7 @@ export const AutocompleteField = ({
     field: { onChange, value },
     fieldState: { invalid, error },
   } = useController({ name, control });
+  console.log(name, value, options);
   return (
     <Wrapper>
       <FormControl size="small" fullWidth disabled={disabled} error={invalid}>

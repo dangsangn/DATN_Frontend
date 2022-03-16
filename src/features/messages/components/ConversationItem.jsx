@@ -50,7 +50,9 @@ const Conversationitem = ({
           <Avatar>
             {detailUser?.username[0] && (detailUser?.username[0]).toUpperCase()}
           </Avatar>
-          <Name>{detailUser?.username}</Name>
+          <Name className="text-clamp text-clamp--1">
+            {detailUser?.username}
+          </Name>
         </ConversationItem>
       ) : null}
     </>
@@ -59,6 +61,7 @@ const Conversationitem = ({
 
 const Name = styled.span`
   margin-left: 12px;
+  display: block;
 `;
 const ConversationItem = styled.div`
   display: flex;
@@ -71,6 +74,7 @@ const ConversationItem = styled.div`
     props.active === true ? "#aaa !important" : ""};
   color: ${(props) => (props.active === true ? "#fff !important" : "")};
   font-weight: ${(props) => (props.active === true ? "bold !important" : "")};
+  overflow: hidden;
   &:hover {
     background-color: #aaa;
     color: #fff;

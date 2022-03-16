@@ -11,12 +11,12 @@ const Login = () => {
   return (
     <Wrapper>
       <Grid container>
-        <Grid item md={7}>
+        <Grid item md={7} sm={5} xs={12}>
           <WrapImage>
             <img src={bgLogin} alt="" />
           </WrapImage>
         </Grid>
-        <Grid item md={5}>
+        <Grid item md={5} sm={7} xs={12}>
           <WrapLogin>
             <WrapTitle>
               <Title>Wecome Back!</Title>
@@ -28,8 +28,8 @@ const Login = () => {
               <Line />
             </Separate>
             <WrapMedia>
-              <Grid container spacing={2}>
-                <Grid item md={12}>
+              <Grid container>
+                <Grid item md={12} xs={12}>
                   <Logingoogle />
                 </Grid>
               </Grid>

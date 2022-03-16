@@ -1,6 +1,7 @@
 import OtherHousesRoundedIcon from "@mui/icons-material/OtherHousesRounded";
 import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded";
 import PersonIcon from "@mui/icons-material/Person";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Box, Divider, Drawer, useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
@@ -9,14 +10,19 @@ import styled from "styled-components";
 import { NavItem } from "./NavItem";
 const items = [
   {
-    href: "/admin/users",
-    icon: <PersonIcon fontSize="small" />,
-    title: "Users",
+    href: "/admin/dashboard",
+    icon: <DashboardIcon fontSize="small" />,
+    title: "Dashboard",
   },
   {
     href: "/admin/rooms",
     icon: <OtherHousesRoundedIcon fontSize="small" />,
     title: "Rooms",
+  },
+  {
+    href: "/admin/users",
+    icon: <PersonIcon fontSize="small" />,
+    title: "Users",
   },
   {
     href: "/admin/account",
@@ -59,7 +65,7 @@ export const SidebarAdmin = (props) => {
       >
         <div>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <TitleLink to="/admin/rooms">Admin</TitleLink>
+            <TitleLink to="/admin/dashboard">Admin</TitleLink>
           </Box>
         </div>
         <Divider

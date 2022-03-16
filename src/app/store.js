@@ -10,8 +10,10 @@ import messagesReducers from "features/messages/MessageSlice";
 import roomDetailRenderers from "features/roommate/roomDetailSlice";
 import userAdminReducers from "features/admin/user/userAdminSlice";
 import roomAdminReducers from "features/admin/room/roomAdminSlice";
+import dashboarAdmindReducers from "features/admin/dashboard/dashboardSlice";
 import myPostReducers from "features/myPost/MyPostSlice";
 import orderReducers from "features/order/orderSlice";
+import notificationReducers from "features/notification/notificationSlice";
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   roomAdminReducers,
   myPostReducers,
   orderReducers,
+  notificationReducers,
+  dashboarAdmindReducers,
 });
 
 export const store = configureStore({

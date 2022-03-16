@@ -163,6 +163,10 @@ const WrapSub = styled.div`
   display: flex;
   align-items: center;
   flex-direction: ${(props) => (props.vertical ? "column" : "row")};
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: initial;
+  }
 `;
 const WrapHeader = styled.div`
   ${(props) =>
@@ -175,10 +179,18 @@ const TextPrice = styled.p`
 const Price = styled.p`
   font-size: 60px !important;
   margin-bottom: 16px;
+  @media (max-width: 768px) {
+    font-size: 30px !important;
+  }
 `;
 const WrapPrice = styled.div`
   color: ${themes.primary};
   text-align: center;
+  @media (max-width: 768px) {
+    text-align: left;
+    display: flex;
+    gap: 12px;
+  }
 `;
 const WrapBoxHorizontal = styled.div`
   display: flex;
@@ -205,6 +217,9 @@ const Title = styled.h3`
 const WrapContent = styled.div`
   margin: ${(props) => (props.vertical ? "0" : "0 32px")};
   width: 100%;
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 `;
 const WrapImage = styled.div`
   height: ${(props) => (props.vertical ? "120px" : "152px")};
@@ -212,6 +227,10 @@ const WrapImage = styled.div`
   overflow: hidden;
   width: 216px;
   position: relative;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-bottom: 16px;
+  }
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -229,6 +248,9 @@ const Wrapper = styled.div`
   &:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     transform: translateY(-8px);
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 export default RoomItem;
