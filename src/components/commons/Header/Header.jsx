@@ -29,10 +29,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducers);
 
-  useEffect(() => {
-    dispatch(notificationActions.getTotalNotificationsNotRead());
-  }, [dispatch]);
-
   const toggleDrawer = (value) => {
     setOpenDrawer(value);
   };

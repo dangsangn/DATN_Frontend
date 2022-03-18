@@ -34,6 +34,7 @@ const Notificationitem = ({ data, onClose }) => {
 
   const handleDeleteNoti = (e) => {
     e.stopPropagation();
+    // console.log(_id);
     dispatch(notificationActions.deleteNotification(_id));
   };
 

@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { themes } from "themes";
 import history from "utils/history";
 import Listdistrict from "./components/ListDistrict";
+import { notificationActions } from "features/notification/notificationSlice";
 const Home = () => {
   const { listRoom, listRoomVerified } = useSelector(
     (state) => state.roomReducers
@@ -31,6 +32,11 @@ const Home = () => {
   const handleGotoAllViewRoomVerify = () => {
     history.push("/view-all-room?verify=true");
   };
+
+  useEffect(() => {
+    dispatch(notificationActions.getTotalNotificationsNotRead());
+  }, [dispatch]);
+
   return (
     <Wrapper>
       <WrapBanner>

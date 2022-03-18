@@ -65,6 +65,7 @@ function* deleteNotificationSaga({ payload }) {
     const res = yield call(deleteNotificationApi, payload);
     if (res) {
       yield put(notificationActions.deleteNotificationSuccess(payload));
+      yield put(notificationActions.getTotalNotificationsNotRead());
     }
   } catch (error) {
     console.log("error", error);
