@@ -1,4 +1,4 @@
-import { authGet, authPost, authPatch } from "apis/clientAxios";
+import { authGet, authPost, authPatch, authDelete } from "apis/clientAxios";
 
 export const getListNotificationApi = () => {
   const url = "/notification";
@@ -18,4 +18,14 @@ export const setReadedNotificationApi = (id) => {
 export const getTotalNotReaddNotificationApi = () => {
   const url = `/notification/total-no-read`;
   return authGet(url);
+};
+
+export const getListNotificationNotReadApi = () => {
+  const url = "/notification/no-read";
+  return authGet(url);
+};
+
+export const deleteNotificationApi = (id) => {
+  const url = "/notification/" + id;
+  return authDelete(url);
 };

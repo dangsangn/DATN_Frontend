@@ -76,16 +76,16 @@ export const Showdetailroom = ({ idRoom, handleClose }) => {
         onClose={handleCloseDialog}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>Delete Room</DialogTitle>
+        <DialogTitle>Xóa phòng</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Do you want delete <strong>#{selectRoom?._id}</strong> room.
+            Bạn có muốn xóa phòng với id <strong>#{selectRoom?._id}</strong>.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={handleCloseDialog}>Hủy bỏ</Button>
           <Button onClick={handleDeleteRoom} color="error">
-            Delete
+            Xóa
           </Button>
         </DialogActions>
       </Dialog>

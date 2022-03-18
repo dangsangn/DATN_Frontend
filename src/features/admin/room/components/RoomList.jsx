@@ -60,25 +60,25 @@ const headCells = [
     id: "image",
     numeric: false,
     disablePadding: false,
-    label: "Image",
+    label: "Hình ảnh",
   },
   {
     id: "address",
     numeric: false,
     disablePadding: false,
-    label: "Address",
+    label: "Địa chỉ",
   },
   {
     id: "emptyRoom",
     numeric: false,
     disablePadding: false,
-    label: "Empty room",
+    label: "Phòng trống",
   },
   {
     id: "verify",
-    label: "Verify",
+    label: "Đã xác thực",
   },
-  { id: "action", numeric: true, disablePadding: false, label: "Action" },
+  { id: "action", numeric: true, disablePadding: false, label: "Hành động" },
 ];
 
 function EnhancedTableHead(props) {

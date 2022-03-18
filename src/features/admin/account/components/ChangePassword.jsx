@@ -29,8 +29,8 @@ const ChangePassword = () => {
   return (
     <WrapChangeInfo>
       <WrapChangeInfoTitle>
-        <TitleInfo>Password</TitleInfo>
-        <Description>Update password</Description>
+        <TitleInfo>Mật khẩu</TitleInfo>
+        <Description>Cập nhật mật khẩu</Description>
       </WrapChangeInfoTitle>
       <WrapForm>
         <Wrapper>
@@ -41,7 +41,7 @@ const ChangePassword = () => {
                   name="password"
                   control={control}
                   placeholder="Password"
-                  label="Password"
+                  label="Mật khẩu cũ"
                   type="password"
                 />
               </Grid>
@@ -50,7 +50,7 @@ const ChangePassword = () => {
                   name="passwordConfirm"
                   control={control}
                   placeholder="Password confirm"
-                  label="Password confirm"
+                  label="Xác nhận mật khẩu"
                   type="password"
                 />
               </Grid>
@@ -65,7 +65,7 @@ const ChangePassword = () => {
               }}
             >
               <Button type="submit" variant="contained">
-                Update
+                Cập nhật
               </Button>
             </Box>
           </form>

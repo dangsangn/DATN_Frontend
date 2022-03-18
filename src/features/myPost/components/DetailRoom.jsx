@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import history from "utils/history";
+import { moneyFormat } from "utils/moneyFormat";
 import { myPostActions } from "../MyPostSlice";
 import ListOrder from "./ListOrder";
 
@@ -51,16 +52,16 @@ export const Detailroom = ({ idRoom, handleClose }) => {
         onClose={handleCloseDialog}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>Delete Room</DialogTitle>
+        <DialogTitle>Xóa phòng</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Do you want delete <strong>#{selectRoom?._id}</strong> room.
+            Bạn có muốn xóa phòng với id là <strong>#{selectRoom?._id}</strong>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <MButton onClick={handleCloseDialog}>Cancel</MButton>
+          <MButton onClick={handleCloseDialog}>Hủy bỏ</MButton>
           <MButton onClick={handleDeleteRoom} color="error">
-            Delete
+            Xóa
           </MButton>
         </DialogActions>
       </Dialog>
@@ -71,17 +72,19 @@ export const Detailroom = ({ idRoom, handleClose }) => {
         <CodeId># {selectRoom?._id}</CodeId>
         <WrapBody>
           <WrapImage>
-            <TitleSub>Images:</TitleSub>
+            <TitleSub>Hình ảnh:</TitleSub>
             {selectRoom?.images && <Imagelist imageList={selectRoom?.images} />}
           </WrapImage>
-          <TitleSub>Address:</TitleSub>
+          <TitleSub>Địa chỉ:</TitleSub>
           <DescriptionSub>
             {selectRoom?.numberHome} {selectRoom?.nameStress},{" "}
-            {selectRoom?.ward?.label}
-            {selectRoom?.district?.label} {selectRoom?.city?.label}
+            {selectRoom?.ward?.label}, {selectRoom?.district?.label},{" "}
+            {selectRoom?.city?.label}
           </DescriptionSub>
-          <TitleSub>Price room:</TitleSub>
-          <DescriptionSub>{selectRoom?.priceRoom} vnd</DescriptionSub>
+          <TitleSub>Gía phòng:</TitleSub>
+          <DescriptionSub>
+            {moneyFormat(selectRoom?.priceRoom)} đồng
+          </DescriptionSub>
           <WrapImage>
             <TitleSub>
               <strong>Danh sách người đặt:</strong>

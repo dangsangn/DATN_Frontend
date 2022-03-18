@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: "",
   setRead: false,
+  status: 1,
 };
 
 const notificationSlice = createSlice({
@@ -14,11 +15,12 @@ const notificationSlice = createSlice({
   reducers: {
     getListNotification: (state, action) => {
       state.listNotification = [];
-      state.loading = false;
+      state.loading = true;
+      state.status = 1;
     },
     getListNotificationSuccess: (state, action) => {
       state.listNotification = action.payload;
-      state.loading = true;
+      state.loading = false;
     },
     getListNotificationError: (state, action) => {
       state.error = action.payload;
@@ -34,6 +36,18 @@ const notificationSlice = createSlice({
     getTotalNotificationsNotRead: (state, action) => {},
     getTotalNotificationsNotReadSuccess: (state, action) => {
       state.countNotRead = action.payload;
+    },
+    getListNotificationNotRead: (state, action) => {
+      state.listNotification = [];
+      state.loading = true;
+      state.status = 0;
+    },
+    deleteNotification: (state, action) => {},
+    deleteNotificationSuccess: (state, action) => {
+      const newList = state.listNotification.filter(
+        (item) => item._id !== action.payload
+      );
+      state.listNotification = newList;
     },
   },
 });

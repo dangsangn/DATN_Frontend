@@ -54,13 +54,13 @@ const Forminfo = ({ data }) => {
               name="fullName"
               control={control}
               placeholder="Full name"
-              label="Full name"
+              label="Họ tên"
             />
           </Grid>
           <Grid item md={6}>
             {role ? (
               <>
-                <Label>Admin role:</Label>
+                <Label>Vai trò admin:</Label>
                 <Switch
                   {...label}
                   onChange={handleChangeRole}
@@ -72,7 +72,7 @@ const Forminfo = ({ data }) => {
                 name="phoneNumber"
                 control={control}
                 placeholder="Phone number"
-                label="Phone number"
+                label="Số điện thoại"
               />
             )}
           </Grid>
@@ -87,7 +87,7 @@ const Forminfo = ({ data }) => {
           }}
         >
           <Button type="submit" variant="contained">
-            Save Detail
+            Lưu chi tiết
           </Button>
         </Box>
       </form>

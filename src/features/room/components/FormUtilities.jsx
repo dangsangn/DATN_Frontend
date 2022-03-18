@@ -51,8 +51,8 @@ const FormUtilities = ({ control, watch }) => {
         <Textarea
           name="description"
           control={control}
-          placeholder="description..."
-          label="Description"
+          placeholder="mô tả..."
+          label="Mô tả thêm"
         />
       </Box>
       <WrapButton>

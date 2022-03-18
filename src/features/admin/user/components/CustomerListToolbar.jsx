@@ -52,7 +52,7 @@ export const CustomerListToolbar = (props) => {
                     </InputAdornment>
                   ),
                 }}
-                placeholder="Search user"
+                placeholder="Tìm kiếm người dùng"
                 variant="outlined"
                 onChange={handleSearchUser}
               />

@@ -39,7 +39,7 @@ const genders = [
     value: 1,
   },
   {
-    label: "Nũ",
+    label: "Nữ",
     value: 2,
   },
 ];

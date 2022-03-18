@@ -52,7 +52,7 @@ const Listorderitem = ({ idOrder }) => {
       notificationActions.createNotification({
         sender: user?._id,
         receiver: detailOrder.user?._id,
-        type: 2,
+        type: 3,
         content: detailOrder._id,
       })
     );

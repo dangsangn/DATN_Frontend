@@ -19,7 +19,7 @@ export const CustomerListToolbar = (props) => {
   const handleSearchUser = (e) => {
     clearTimeout(setTimeoutRef.current);
     setTimeoutRef.current = setTimeout(() => {
-      dispatch(roomAdminActions.getListUser({ q: e.target.value }));
+      dispatch(roomAdminActions.getListRoom({ q: e.target.value }));
     }, 500);
   };
   return (
@@ -52,7 +52,7 @@ export const CustomerListToolbar = (props) => {
                     </InputAdornment>
                   ),
                 }}
-                placeholder="Search room"
+                placeholder="Tìm kiếm phòng..."
                 variant="outlined"
                 onChange={handleSearchUser}
               />

@@ -9,7 +9,7 @@ const Infoaccount = () => {
   const { user } = useSelector((state) => state.userReducers);
   return (
     <Wrapper>
-      <Title>Account</Title>
+      <Title>Tài khoản</Title>
       <Box>
         <Container>
           <WrapInfo>
@@ -21,18 +21,18 @@ const Infoaccount = () => {
             <Username>{user?.username}</Username>
             <Email>{user?.email}</Email>
             <Create>
-              Creaate at:{" "}
+              Ngày tạo:{" "}
               {user?.createdAt &&
                 format(new Date(user?.createdAt), "dd/MM/yyyy")}
             </Create>
             <Role>
-              Role: <strong>{user?.isAdmin ? "Admin" : "User"}</strong>
+              Vai trò: <strong>{user?.isAdmin ? "Admin" : "User"}</strong>
             </Role>
           </WrapInfo>
           <WrapChangeInfo>
             <WrapChangeInfoTitle>
-              <TitleInfo>Profile</TitleInfo>
-              <Description>The information can be edited</Description>
+              <TitleInfo>Hồ sơ</TitleInfo>
+              <Description>Thông tin có thể được sửa đổi</Description>
             </WrapChangeInfoTitle>
             <WrapForm>
               {Object.keys(user).length > 0 && <Forminfo data={user} />}

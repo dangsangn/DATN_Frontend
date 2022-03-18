@@ -69,9 +69,9 @@ const headCells = [
     id: "createAt",
     numeric: false,
     disablePadding: false,
-    label: "Create At",
+    label: "Ngày tạo",
   },
-  { id: "action", numeric: true, disablePadding: false, label: "Action" },
+  { id: "action", numeric: true, disablePadding: false, label: "Hành động" },
 ];
 
 function EnhancedTableHead(props) {

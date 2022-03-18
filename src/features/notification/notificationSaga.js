@@ -1,7 +1,9 @@
 import { call, put, takeEvery, takeLatest } from "@redux-saga/core/effects";
 import {
   createNotificationApi,
+  deleteNotificationApi,
   getListNotificationApi,
+  getListNotificationNotReadApi,
   getTotalNotReaddNotificationApi,
   setReadedNotificationApi,
 } from "./api";
@@ -47,6 +49,28 @@ function* getTotalNotificationsNotReadSaga() {
   }
 }
 
+function* getListNotificationNotReadSaga() {
+  try {
+    const res = yield call(getListNotificationNotReadApi);
+    if (res) {
+      yield put(notificationActions.getListNotificationSuccess(res.data));
+    }
+  } catch (error) {
+    yield put(notificationActions.getListNotificationError(error));
+  }
+}
+
+function* deleteNotificationSaga({ payload }) {
+  try {
+    const res = yield call(deleteNotificationApi, payload);
+    if (res) {
+      yield put(notificationActions.deleteNotificationSuccess(payload));
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+
 export function* notificationSaga() {
   yield takeEvery(
     notificationActions.getListNotification,
@@ -63,5 +87,13 @@ export function* notificationSaga() {
   yield takeEvery(
     notificationActions.getTotalNotificationsNotRead,
     getTotalNotificationsNotReadSaga
+  );
+  yield takeLatest(
+    notificationActions.getListNotificationNotRead,
+    getListNotificationNotReadSaga
+  );
+  yield takeLatest(
+    notificationActions.deleteNotification,
+    deleteNotificationSaga
   );
 }
