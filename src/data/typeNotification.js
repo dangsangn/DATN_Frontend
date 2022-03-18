@@ -1,5 +1,5 @@
 export const typeNotifications = [
-  { type: 1, content: "đã đặt phòng với id là", link: "/order" },
+  { type: 1, content: "đã đặt phòng với id là", link: "/my-room" },
   {
     type: 2,
     content: "đã xác nhận đặt phòng của bạn với id là",
