@@ -20,7 +20,7 @@ const showGender = (number = 3) => {
       break;
 
     default:
-      result = "Nam và Nũ";
+      result = "Nam và Nữ";
       break;
   }
   return result;
