@@ -12,12 +12,12 @@ export const typeNotifications = [
   },
   {
     type: 4,
-    content: "đã xác minh việc phòng của bạn với id là",
+    content: "đã xác minh phòng của bạn với id là",
     link: "/my-room",
   },
   {
     type: 5,
-    content: "đã hủy xác minh việc phòng của bạn với id là",
+    content: "đã hủy xác minh phòng của bạn với id là",
     link: "/my-room",
   },
 ];
