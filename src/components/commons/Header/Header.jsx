@@ -33,6 +33,10 @@ const Header = () => {
     setOpenDrawer(value);
   };
 
+  useEffect(() => {
+    dispatch(notificationActions.getTotalNotificationsNotRead());
+  }, [dispatch]);
+
   const handleSearch = (e) => {
     clearTimeout(searchRef.current);
 
