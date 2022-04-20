@@ -12,6 +12,7 @@ import { myPostSaga } from "features/myPost/MyPostSaga";
 import { orderSaga } from "features/order/orderSaga";
 import { notificationSaga } from "features/notification/notificationSaga";
 import { dashboardAdminSaga } from "features/admin/dashboard/dashboardSaga";
+import { viewMapSaga } from "features/viewMap/viewMapSaga";
 
 export function* mySaga() {
   yield all([
@@ -28,5 +29,6 @@ export function* mySaga() {
     orderSaga(),
     notificationSaga(),
     dashboardAdminSaga(),
+    viewMapSaga(),
   ]);
 }

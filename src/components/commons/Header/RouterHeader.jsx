@@ -60,6 +60,11 @@ const Routerheader = () => {
   return (
     // <>
     <ListMenu>
+      <ItemMenu key="viewMap">
+        <LinkMenu classnameactive="active" to="/conversation/view-map">
+          Xem bản đồ
+        </LinkMenu>
+      </ItemMenu>
       {user?.username ? (
         <>
           <ItemMenu key="postRoom">
@@ -151,9 +156,6 @@ const Routerheader = () => {
   );
 };
 
-const WrapperNotification = styled.div`
-  padding: 24px 0;
-`;
 const MButton = styled(Button)`
   text-transform: initial !important;
   border-radius: 16px !important;

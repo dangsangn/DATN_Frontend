@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Button, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -12,6 +13,8 @@ import { themes } from "themes";
 import history from "utils/history";
 import Listdistrict from "./components/ListDistrict";
 import { notificationActions } from "features/notification/notificationSlice";
+import Map from "features/viewMap/components/Map/Map";
+
 const Home = () => {
   const { listRoom, listRoomVerified } = useSelector(
     (state) => state.roomReducers
@@ -42,6 +45,7 @@ const Home = () => {
       <WrapBanner>
         <Banner />
       </WrapBanner>
+      <Map />
       <WrapContent>
         <WrapDistrict>
           <TitleDistrict>Quận đang có nhiều trọ</TitleDistrict>

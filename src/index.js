@@ -10,31 +10,17 @@ import * as serviceWorker from "./serviceWorker";
 import history from "utils/history";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Router } from "react-router-dom";
+import { themeMui } from "themes/themes-mui";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#411196",
-    },
-    white: {
-      main: "#fff",
-    },
-    blue: {
-      main: "#4877F8",
-    },
-    print: {
-      main: "#fe0b95",
-    },
-  },
-});
+const theme = createTheme(themeMui);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Router history={history}>
           <App />
-          <CssBaseline />
         </Router>
       </ThemeProvider>
     </Provider>

@@ -14,6 +14,8 @@ import dashboarAdmindReducers from "features/admin/dashboard/dashboardSlice";
 import myPostReducers from "features/myPost/MyPostSlice";
 import orderReducers from "features/order/orderSlice";
 import notificationReducers from "features/notification/notificationSlice";
+import viewMapReducers from "features/viewMap/viewMapSlice";
+
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
@@ -30,6 +32,7 @@ const rootReducer = combineReducers({
   orderReducers,
   notificationReducers,
   dashboarAdmindReducers,
+  viewMapReducers,
 });
 
 export const store = configureStore({
