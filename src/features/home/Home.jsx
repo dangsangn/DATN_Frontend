@@ -13,7 +13,6 @@ import { themes } from "themes";
 import history from "utils/history";
 import Listdistrict from "./components/ListDistrict";
 import { notificationActions } from "features/notification/notificationSlice";
-import Map from "features/viewMap/components/Map/Map";
 
 const Home = () => {
   const { listRoom, listRoomVerified } = useSelector(
@@ -45,7 +44,6 @@ const Home = () => {
       <WrapBanner>
         <Banner />
       </WrapBanner>
-      <Map />
       <WrapContent>
         <WrapDistrict>
           <TitleDistrict>Quận đang có nhiều trọ</TitleDistrict>
