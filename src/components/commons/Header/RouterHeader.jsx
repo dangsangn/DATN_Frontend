@@ -60,11 +60,11 @@ const Routerheader = () => {
   return (
     // <>
     <ListMenu>
-      <ItemMenu key="viewMap">
+      {/* <ItemMenu key="viewMap">
         <LinkMenu classnameactive="active" to="/conversation/view-map">
           Xem bản đồ
         </LinkMenu>
-      </ItemMenu>
+      </ItemMenu> */}
       {user?.username ? (
         <>
           <ItemMenu key="postRoom">
